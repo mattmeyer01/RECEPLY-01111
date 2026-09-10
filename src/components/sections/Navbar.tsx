@@ -34,11 +34,14 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
+          {/* Wzorzec YC (Stripe/Linear/Arini): CTA w navbarze zostaje zawsze,
+              na mobile tylko krótsza etykieta i mniejszy rozmiar. */}
           <a
             href="#cta"
-            className="inline-flex items-center rounded-full bg-ink text-cream text-sm font-medium px-5 py-2.5 no-underline transition-colors duration-300 hover:bg-blu"
+            className="inline-flex items-center rounded-full bg-ink text-cream text-sm font-medium px-5 py-2.5 no-underline transition-colors duration-300 hover:bg-blu max-[900px]:px-4 max-[900px]:py-2 max-[900px]:text-[13px]"
           >
-            Umów bezpłatną rozmowę
+            <span className="max-[900px]:hidden">Umów bezpłatną rozmowę</span>
+            <span className="hidden max-[900px]:inline">Umów rozmowę</span>
           </a>
           <button
             aria-label="Menu"
