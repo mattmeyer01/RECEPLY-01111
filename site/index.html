@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receply. Recepcja, która nigdy nie ma wolnego</title>
+<meta name="description" content="Receply to recepcjonistka AI dla salonów beauty. Odbiera telefon, odpisuje na Instagramie i wpisuje wizytę do kalendarza, kiedy Ty pracujesz przy kliencie.">
+<meta name="theme-color" content="#0A0E1A">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Receply. Recepcja, która nigdy nie ma wolnego">
+<meta property="og:description" content="Recepcjonistka AI dla salonów beauty. Odbiera telefon, odpisuje na Instagramie, rezerwuje wizyty.">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RECEPLY, tokeny
+   ============================================================ */
+:root{
+  --ink:#0A0E1A;
+  --ink-2:#111729;
+  --ink-3:#1B2440;
+  --line:rgba(143,176,255,.14);
+  --ivory:#F2EFE9;
+  --muted:#97A1BC;
+  --blue:#3D6BFF;
+  --blue-lo:#8FB0FF;
+  --mint:#7BE5B0;
+  --display:"Bricolage Grotesque","Hanken Grotesk",system-ui,sans-serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Martian Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --shell:min(1180px,100% - 48px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--ink);color:var(--ivory);
+  font-family:var(--body);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.04;letter-spacing:-.025em;margin:0}
+h1{font-size:clamp(38px,6.4vw,82px)}
+h2{font-size:clamp(30px,4.4vw,58px)}
+h3{font-size:clamp(20px,2vw,25px);letter-spacing:-.015em}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img,video{max-width:100%;display:block}
+::selection{background:var(--blue);color:#fff}
+:focus-visible{outline:2px solid var(--blue-lo);outline-offset:3px;border-radius:6px}
+
+.shell{width:var(--shell);margin-inline:auto}
+.label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-lo)}
+.lede{color:var(--muted);font-size:clamp(16px,1.4vw,19px);max-width:56ch}
+
+/* ---------- warstwa tła: cząsteczki + poświata ---------- */
+#env{position:fixed;inset:0;z-index:0;pointer-events:none}
+#env canvas{width:100%;height:100%;display:block;opacity:.5}
+#glow{position:fixed;left:50%;top:0;width:120vmax;height:120vmax;transform:translate(-50%,-55%);
+  background:radial-gradient(circle,rgba(61,107,255,.13),rgba(61,107,255,0) 62%);
+  z-index:0;pointer-events:none;transition:opacity 1.2s var(--ease),transform 1.6s var(--ease)}
+main,header,footer{position:relative;z-index:1}
+
+/* ---------- nawigacja ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .45s var(--ease),border-color .45s var(--ease),backdrop-filter .45s}
+header.solid{background:rgba(10,14,26,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{width:var(--shell);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.02em}
+.brand svg{overflow:visible}
+.nav-links{display:flex;gap:30px;font-size:14.5px;color:var(--muted)}
+.nav-links a{position:relative;padding-bottom:3px;transition:color .3s var(--ease)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:var(--blue-lo);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.nav-links a:hover{color:var(--ivory)}
+.nav-links a:hover::after{transform:scaleX(1)}
+@media (max-width:860px){.nav-links{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--body);
+  font-size:15px;font-weight:600;padding:13px 24px;border-radius:999px;border:1px solid transparent;
+  cursor:pointer;transition:transform .35s var(--ease),background .35s var(--ease),box-shadow .35s var(--ease),color .35s var(--ease);white-space:nowrap}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 30px rgba(61,107,255,.32)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 42px rgba(61,107,255,.46)}
+.btn-ghost{background:transparent;color:var(--ivory);border-color:var(--line)}
+.btn-ghost:hover{background:rgba(143,176,255,.08);transform:translateY(-2px)}
+.btn-sm{padding:10px 19px;font-size:14px}
+
+/* ---------- hero: scrub ---------- */
+#hero{position:relative;height:560vh}
+#hero.static-hero{height:auto}
+.stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#05070E}
+#hero.static-hero .stage{position:relative;height:auto;min-height:100svh;display:flex;align-items:flex-end}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,7,14,0) 30%,rgba(5,7,14,.55) 62%,rgba(10,14,26,.82) 100%),
+             linear-gradient(0deg,rgba(10,14,26,.95) 0%,rgba(10,14,26,0) 38%)}
+.stage video,.stage .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage video{opacity:0;transition:opacity .9s var(--ease)}
+.stage video.on{opacity:1}
+.poster{opacity:1;transition:opacity .9s var(--ease)}
+#hero.static-hero .poster{object-position:38% center}
+.poster.off{opacity:0}
+#hero.static-hero .stage::after{background:linear-gradient(0deg,rgba(10,14,26,.94) 4%,rgba(10,14,26,.42) 52%,rgba(10,14,26,.1) 100%)}
+
+/* pierścień ładowania */
+.ring{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);z-index:5;
+  display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);transition:opacity .6s var(--ease)}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:2;stroke-linecap:round}
+.ring .track{stroke:rgba(143,176,255,.16)}
+.ring .bar{stroke:var(--blue-lo);stroke-dasharray:75.4;stroke-dashoffset:75.4;transition:stroke-dashoffset .3s linear}
+.ring.done{opacity:0;pointer-events:none}
+
+/* pasma napisów */
+.bands{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:flex-end}
+.bands-inner{width:var(--shell);display:grid}
+.band{grid-area:1/1;max-width:min(520px,100%);margin-left:auto;opacity:0;will-change:opacity,transform}
+.band .k{font-family:var(--display);font-weight:600;font-size:clamp(30px,4.2vw,54px);line-height:1.05;letter-spacing:-.028em;
+  text-shadow:0 2px 28px rgba(5,7,14,.9),0 1px 3px rgba(5,7,14,.8)}
+.band .s{margin-top:14px;color:#C9D2E8;font-size:clamp(15px,1.5vw,19px);max-width:40ch;
+  text-shadow:0 1px 18px rgba(5,7,14,.95)}
+.band .k em{font-style:normal;color:var(--blue-lo)}
+.scrollcue{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);z-index:5;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  display:flex;flex-direction:column;align-items:center;gap:9px;transition:opacity .5s var(--ease)}
+.scrollcue .line{width:1px;height:34px;background:linear-gradient(180deg,var(--blue-lo),transparent);animation:cue 2.4s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleY(.2);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* moment osiadania */
+.settle{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:flex-end;
+  opacity:0;pointer-events:none;transition:opacity .5s var(--ease)}
+.settle.on{opacity:1;pointer-events:auto}
+#hero.static-hero .settle{position:relative;opacity:1;pointer-events:auto;padding:150px 0 80px}
+.settle-inner{width:var(--shell)}
+.settle-box{max-width:min(600px,100%);margin-left:auto}
+.settle h1{margin:16px 0 0;text-shadow:0 3px 40px rgba(5,7,14,.9)}
+.settle h1 .hl{color:var(--blue-lo)}
+.settle .lede{margin-top:20px;color:#C4CDE4;text-shadow:0 1px 20px rgba(5,7,14,.9)}
+.settle .cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.settle .micro{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.static-bands{display:none}
+#hero.static-hero .static-bands{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.static-bands span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue-lo);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:rgba(27,36,64,.5)}
+@media (max-width:560px){
+  .settle .cta{flex-direction:column;align-items:stretch}
+  .settle .cta .btn{width:100%}
+  .static-bands span{font-size:9.5px;padding:6px 11px}
+}
+@media (max-width:860px){
+  .bands-inner,.settle-inner{--shell:calc(100% - 40px)}
+  .band,.settle-box{margin-left:0}
+  .stage::after{background:linear-gradient(0deg,rgba(10,14,26,.96) 8%,rgba(10,14,26,.5) 52%,rgba(10,14,26,.3) 100%)}
+}
+
+/* ---------- wspólne sekcje ---------- */
+section{position:relative}
+.sec{padding:clamp(84px,11vw,150px) 0}
+.sec-head{max-width:720px}
+.sec-head h2{margin-top:16px}
+.sec-head .lede{margin-top:20px}
+
+/* podpis motywu: rysująca się fala */
+.wave-rule{width:100%;height:38px;overflow:hidden;margin:0 0 6px}
+.wave-rule path{fill:none;stroke:var(--blue-lo);stroke-width:1.5;opacity:.5;
+  stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 1.9s var(--ease)}
+.wave-rule.in path{stroke-dashoffset:0}
+
+/* wejścia */
+.rise{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;transition:none}
+  .wave-rule path{stroke-dashoffset:0;transition:none}
+}
+
+/* pasek zaufania */
+.trust{border-block:1px solid var(--line);background:rgba(17,23,41,.4)}
+.trust .row{display:flex;flex-wrap:wrap;gap:14px 40px;justify-content:space-between;padding:20px 0}
+.trust span{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:9px}
+.trust span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--mint);flex:none}
+
+/* statystyki + licznik bębenkowy */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
+@media (max-width:860px){.stats{grid-template-columns:1fr;gap:22px}}
+.stat{border:1px solid var(--line);border-radius:18px;padding:30px 26px 26px;background:linear-gradient(180deg,rgba(27,36,64,.42),rgba(17,23,41,.2));
+  transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.stat:hover{border-color:rgba(143,176,255,.34);transform:translateY(-4px)}
+.odo{display:flex;align-items:baseline;font-family:var(--display);font-weight:600;font-size:clamp(44px,5.6vw,70px);letter-spacing:-.045em;color:var(--ivory);line-height:1}
+.reel{display:inline-block;height:1em;line-height:1;overflow:hidden;vertical-align:baseline}
+.reel i{display:block;height:1em;line-height:1;font-style:normal}
+.reel .strip{display:block;transition:transform 1.2s var(--ease)}
+.odo .suf{color:var(--blue-lo)}
+.stat p{margin-top:14px;color:var(--muted);font-size:15.5px;max-width:30ch}
+.stat .src{margin-top:16px;font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:rgba(151,161,188,.6)}
+
+/* zdanie wyostrzane słowo po słowie */
+.statement{padding:clamp(90px,13vw,170px) 0}
+.statement p{font-family:var(--display);font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.22;letter-spacing:-.028em;max-width:19ch}
+.statement w{display:inline-block;filter:blur(7px);opacity:.24;transition:filter .5s var(--ease),opacity .5s var(--ease)}
+.statement w.sharp{filter:blur(0);opacity:1}
+.statement w.hl.sharp{color:var(--blue-lo)}
+@media (prefers-reduced-motion:reduce){.statement w{filter:none;opacity:1}}
+
+/* jak to działa */
+.steps{display:grid;gap:26px;grid-template-columns:repeat(3,1fr);margin-top:60px}
+@media (max-width:900px){.steps{grid-template-columns:1fr}}
+.step{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:rgba(17,23,41,.42);
+  transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.step:hover{border-color:rgba(143,176,255,.32);transform:translateY(-5px)}
+.step .shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0B1120}
+.step .shot img{width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 1.5s var(--ease)}
+.step .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,23,41,.75),rgba(17,23,41,0) 60%)}
+.step .curtain{position:absolute;inset:0;background:var(--ink-2);transform-origin:left;transition:transform 1.05s var(--ease);z-index:2}
+.step.in .curtain{transform:scaleX(0)}
+.step.in .shot img{transform:scale(1)}
+.step .body{padding:26px 26px 30px}
+.step .n{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;color:var(--blue-lo)}
+.step h3{margin:12px 0 10px}
+.step p{color:var(--muted);font-size:15.5px}
+@media (prefers-reduced-motion:reduce){.step .curtain{transform:scaleX(0)}.step .shot img{transform:none}}
+
+/* bento możliwości */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:58px}
+.cell{border:1px solid var(--line);border-radius:18px;padding:26px;background:rgba(17,23,41,.45);position:relative;overflow:hidden;
+  transition:border-color .5s var(--ease),background .5s var(--ease),transform .5s var(--ease)}
+.cell::before{content:"";position:absolute;width:230px;height:230px;left:var(--mx,50%);top:var(--my,50%);transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(61,107,255,.18),transparent 68%);opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
+.cell:hover::before{opacity:1}
+.cell:hover{border-color:rgba(143,176,255,.32);transform:translateY(-4px)}
+.cell .ico{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:rgba(61,107,255,.14);color:var(--blue-lo);margin-bottom:18px}
+.cell h3{font-size:19px;letter-spacing:-.01em}
+.cell p{margin-top:9px;color:var(--muted);font-size:15px}
+.c-2{grid-column:span 2}.c-3{grid-column:span 3}.c-4{grid-column:span 4}.c-6{grid-column:span 6}
+@media (max-width:980px){.bento{grid-template-columns:repeat(2,1fr)}.c-2{grid-column:span 1}.c-3,.c-4,.c-6{grid-column:span 2}}
+@media (max-width:620px){.bento{grid-template-columns:1fr}.c-2,.c-3,.c-4,.c-6{grid-column:span 1}}
+
+/* pasek przewijających się pytań */
+.mq{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.mq-track{display:flex;width:max-content;animation:mq 42s linear infinite}
+.mq-track.rev{animation-direction:reverse}
+.mq:hover .mq-track{animation-play-state:paused}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pill{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;margin-right:12px;
+  border:1px solid var(--line);border-radius:999px;padding:10px 18px;font-size:14.5px;color:#C4CDE4;background:rgba(27,36,64,.4)}
+.pill b{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;color:var(--blue-lo);text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}}
+
+/* odtwarzacz rozmowy */
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center;margin-top:56px}
+@media (max-width:960px){.demo{grid-template-columns:1fr;gap:32px}}
+.phone{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(27,36,64,.55),rgba(17,23,41,.35));padding:22px;min-height:430px;display:flex;flex-direction:column}
+.phone-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.caller{display:flex;align-items:center;gap:11px}
+.caller .dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(123,229,176,.5);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(123,229,176,.45)}70%{box-shadow:0 0 0 12px rgba(123,229,176,0)}100%{box-shadow:0 0 0 0 rgba(123,229,176,0)}}
+.caller strong{font-size:15px;font-weight:600}
+.caller small{display:block;color:var(--muted);font-size:12.5px}
+.timer{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.thread{flex:1;display:flex;flex-direction:column;gap:12px;padding:20px 2px;overflow:hidden}
+.msg{max-width:84%;padding:12px 16px;border-radius:15px;font-size:15px;line-height:1.45;
+  opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.msg.show{opacity:1;transform:none}
+.msg.them{align-self:flex-start;background:rgba(27,36,64,.85);border:1px solid var(--line);border-bottom-left-radius:5px}
+.msg.us{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:5px}
+.msg .who{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.66;margin-bottom:5px}
+.booked{margin-top:6px;border:1px solid rgba(123,229,176,.34);background:rgba(123,229,176,.09);border-radius:14px;padding:15px 17px;
+  opacity:0;transform:translateY(10px) scale(.97);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.booked.show{opacity:1;transform:none}
+.booked .t{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.booked .v{margin-top:7px;font-size:15.5px;font-weight:600}
+.booked .m{margin-top:3px;color:var(--muted);font-size:13.5px}
+.demo-side .list{margin-top:26px;display:flex;flex-direction:column;gap:15px}
+.demo-side .list li{list-style:none;display:flex;gap:13px;color:var(--muted);font-size:15.5px}
+.demo-side .list b{color:var(--ivory);font-weight:600}
+.demo-side .list .mk{flex:none;margin-top:8px;width:16px;height:7px}
+.demo-side ul{margin:0;padding:0}
+
+/* integracje */
+.integr{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px}
+.integr div{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:14px;padding:14px 20px;
+  background:rgba(17,23,41,.45);font-size:15px;transition:border-color .4s var(--ease),transform .4s var(--ease)}
+.integr div:hover{border-color:rgba(143,176,255,.32);transform:translateY(-3px)}
+.integr .g{width:8px;height:8px;border-radius:50%;background:var(--mint)}
+.integr .soon{color:var(--muted)}
+.integr .soon .g{background:rgba(151,161,188,.5)}
+
+/* cennik */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+@media (max-width:960px){.plans{grid-template-columns:1fr}}
+.plan{border:1px solid var(--line);border-radius:20px;padding:32px 28px;background:rgba(17,23,41,.45);display:flex;flex-direction:column;
+  transition:border-color .5s var(--ease),transform .5s var(--ease)}
+.plan:hover{transform:translateY(-5px);border-color:rgba(143,176,255,.3)}
+.plan.hot{border-color:rgba(61,107,255,.55);background:linear-gradient(180deg,rgba(61,107,255,.12),rgba(17,23,41,.55));
+  box-shadow:0 20px 60px rgba(61,107,255,.14)}
+.plan .tag{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-lo)}
+.plan h3{margin:14px 0 6px}
+.plan .who{color:var(--muted);font-size:14.5px;min-height:42px}
+.plan .price{margin:20px 0 4px;font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:-.04em}
+.plan .price small{font-family:var(--body);font-size:15px;font-weight:500;color:var(--muted);letter-spacing:0}
+.plan ul{list-style:none;margin:22px 0 26px;padding:0;display:flex;flex-direction:column;gap:11px}
+.plan li{display:flex;gap:11px;font-size:15px;color:#C4CDE4}
+.plan li svg{flex:none;margin-top:6px;color:var(--mint)}
+.plan .btn{margin-top:auto;width:100%}
+.plan-note{margin-top:26px;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+
+/* faq */
+.faq{margin-top:52px;border-top:1px solid var(--line)}
+.q{border-bottom:1px solid var(--line)}
+.q button{width:100%;background:none;border:0;color:var(--ivory);font-family:var(--display);font-weight:600;
+  font-size:clamp(18px,2vw,23px);letter-spacing:-.015em;text-align:left;padding:26px 44px 26px 0;cursor:pointer;position:relative}
+.q button::after{content:"";position:absolute;right:6px;top:50%;width:13px;height:13px;
+  border-right:1.6px solid var(--blue-lo);border-bottom:1.6px solid var(--blue-lo);
+  transform:translateY(-70%) rotate(45deg);transition:transform .45s var(--ease)}
+.q.open button::after{transform:translateY(-30%) rotate(-135deg)}
+.q .a{overflow:hidden;height:0;transition:height .5s var(--ease)}
+.q .a p{color:var(--muted);font-size:16px;max-width:70ch;padding-bottom:28px}
+
+/* finalne cta + formularz */
+.final{border:1px solid var(--line);border-radius:28px;padding:clamp(36px,5vw,66px);
+  background:linear-gradient(160deg,rgba(61,107,255,.16),rgba(17,23,41,.6) 58%);position:relative;overflow:hidden}
+.final::after{content:"";position:absolute;right:-12%;top:-30%;width:56%;height:160%;
+  background:url("assets/ending.jpg") center/cover no-repeat;opacity:.22;
+  mask-image:radial-gradient(circle at 62% 50%,#000 26%,transparent 68%);
+  -webkit-mask-image:radial-gradient(circle at 62% 50%,#000 26%,transparent 68%);pointer-events:none}
+.final .inner{position:relative;max-width:640px}
+form{margin-top:32px;display:grid;gap:12px;grid-template-columns:1fr 1fr}
+form .full{grid-column:1/-1}
+@media (max-width:700px){form{grid-template-columns:1fr}}
+input{width:100%;background:rgba(10,14,26,.6);border:1px solid var(--line);border-radius:13px;padding:15px 17px;
+  color:var(--ivory);font-family:var(--body);font-size:15.5px;transition:border-color .35s var(--ease),background .35s var(--ease)}
+input::placeholder{color:rgba(151,161,188,.75)}
+input:focus{outline:none;border-color:var(--blue-lo);background:rgba(10,14,26,.85)}
+form .btn{height:52px}
+.form-note{margin-top:16px;font-size:13.5px;color:var(--muted)}
+.thanks{display:none;margin-top:32px;border:1px solid rgba(123,229,176,.36);background:rgba(123,229,176,.09);
+  border-radius:18px;padding:26px 28px}
+.thanks.show{display:block;animation:pop .6s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.thanks h3{color:var(--mint)}
+.thanks p{margin-top:9px;color:#C4CDE4;font-size:15.5px}
+form.gone{display:none}
+
+/* ograniczony ruch: gasimy reszte animacji, ktore nie maja wlasnej reguly */
+@media (prefers-reduced-motion:reduce){
+  .caller .dot{animation:none}
+  .thanks.show{animation:none}
+  .reel .strip{transition:none}
+  .scrollcue .line{animation:none}
+  .btn:hover,.stat:hover,.step:hover,.cell:hover,.plan:hover,.integr div:hover{transform:none}
+}
+
+/* stopka */
+footer{border-top:1px solid var(--line);margin-top:clamp(70px,9vw,120px);padding:52px 0 46px;background:rgba(17,23,41,.35)}
+.foot{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap}
+.foot .cols{display:flex;gap:56px;flex-wrap:wrap}
+.foot h4{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;font-size:14.5px;color:#C4CDE4}
+.foot a:hover{color:var(--blue-lo)}
+.disc{margin-top:42px;padding-top:26px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:78ch}
+.disc b{color:#C4CDE4;font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="glow" aria-hidden="true"></div>
+<div id="env" aria-hidden="true"><canvas id="dust"></canvas></div>
+
+<header id="top">
+  <nav class="nav">
+    <a class="brand" href="#top" aria-label="Receply, strona główna">
+      <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <path d="M1 9h3l2-6 2.6 13L11.5 2l2.4 14 2.2-9 1.9 5h6" stroke="#8FB0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Receply
+    </a>
+    <div class="nav-links">
+      <a href="#jak">Jak to działa</a>
+      <a href="#mozliwosci">Możliwości</a>
+      <a href="#rozmowa">Rozmowa</a>
+      <a href="#cennik">Cennik</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="#zapis">Wczesny dostęp</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="stage">
+    <img class="poster" id="poster" src="assets/poster.jpg" alt="Wstęga światła w kształcie fali głosu w granatowej przestrzeni">
+    <video id="scrub" muted playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
+
+    <div class="ring" id="ring" hidden>
+      <svg width="28" height="28" viewBox="0 0 28 28"><circle class="track" cx="14" cy="14" r="12"/><circle class="bar" id="ringbar" cx="14" cy="14" r="12"/></svg>
+      <span id="ringtxt">Wczytywanie</span>
+    </div>
+
+    <div class="bands" aria-hidden="true">
+      <div class="bands-inner">
+        <div class="band" data-band><p class="k">Telefon dzwoni.</p><p class="s">A Ty masz ręce w farbie i klientkę w fotelu.</p></div>
+        <div class="band" data-band><p class="k">Nie zostawi wiadomości.</p><p class="s">Zadzwoni do salonu obok. I już nie wróci.</p></div>
+        <div class="band" data-band><p class="k">Instagram to Twoja <em>druga recepcja</em>.</p><p class="s">Pytania o cenę i wolny termin przychodzą wieczorem, w weekend i w trakcie zabiegu.</p></div>
+        <div class="band" data-band><p class="k">Receply odbiera.</p><p class="s">Telefon, Instagram, Messenger. Jeden spokojny głos, dwie sekundy, każda pora.</p></div>
+      </div>
+    </div>
+
+    <div class="scrollcue" id="cue"><span>Przewiń</span><span class="line"></span></div>
+
+    <div class="settle" id="settle">
+      <div class="settle-inner">
+        <div class="settle-box">
+          <p class="label">Recepcjonistka AI dla salonów</p>
+          <h1>Recepcja, która <span class="hl">nigdy nie ma wolnego</span>.</h1>
+          <p class="lede">Receply odbiera telefon, odpisuje na Instagramie i wpisuje wizytę do Twojego kalendarza. Wtedy, kiedy Ty stoisz przy fotelu.</p>
+          <div class="static-bands">
+            <span>Odbiera w 2 sekundy</span><span>Instagram i Messenger</span><span>Rezerwuje w Booksy</span><span>Przypomina o wizycie</span>
+          </div>
+          <div class="cta">
+            <a class="btn btn-primary" href="#zapis">Zapisz się na wczesny dostęp</a>
+            <a class="btn btn-ghost" href="#rozmowa">Zobacz, jak rozmawia</a>
+          </div>
+          <p class="micro">Pierwsze 100 salonów · 3 miesiące w cenie jednego</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PASEK ZAUFANIA ============ -->
+<section class="trust">
+  <div class="shell row">
+    <span>Dane przetwarzane w UE</span>
+    <span>Zgodność z RODO</span>
+    <span>Integracja z Booksy</span>
+    <span>Bez umowy na lata</span>
+  </div>
+</section>
+
+<!-- ============ STATYSTYKI ============ -->
+<section class="sec">
+  <div class="shell">
+    <svg class="wave-rule" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true"><path d="M0 19h240l16-13 14 26 15-30 16 34 14-22 15 12 16-9 14 5h806"/></svg>
+    <div class="sec-head rise">
+      <p class="label">01 · Koszt ciszy</p>
+      <h2>Ile kosztuje nieodebrany telefon</h2>
+      <p class="lede">Nie chodzi o jeden dzwonek. Chodzi o to, że dzwonek trafia w moment, w którym po prostu nie możesz go odebrać.</p>
+    </div>
+    <div class="stats">
+      <div class="stat rise"><div class="odo" data-odo="30" data-pre="15–"></div><p>telefonów dziennie odbiera średni salon, w środku pracy z klientem.</p><p class="src">Raporty branżowe</p></div>
+      <div class="stat rise"><div class="odo" data-odo="37" data-suf="%"></div><p>połączeń zostaje bez odbioru, a większość z nich w godzinach otwarcia.</p><p class="src">Raporty branżowe</p></div>
+      <div class="stat rise"><div class="odo" data-odo="24" data-suf="%"></div><p>dzwoniących zostawia wiadomość. Reszta po prostu znika.</p><p class="src">Raporty branżowe</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZDANIE ============ -->
+<section class="statement">
+  <div class="shell">
+    <p id="stmt" data-hl="16,17,18,19">Nie chodzi o to, żeby pracować szybciej. Chodzi o to, żeby nikt nie czekał na odpowiedź, kiedy Ty trzymasz nożyczki.</p>
+  </div>
+</section>
+
+<!-- ============ JAK TO DZIAŁA ============ -->
+<section class="sec" id="jak">
+  <div class="shell">
+    <svg class="wave-rule" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true"><path d="M0 19h240l16-13 14 26 15-30 16 34 14-22 15 12 16-9 14 5h806"/></svg>
+    <div class="sec-head rise">
+      <p class="label">02 · Wdrożenie</p>
+      <h2>Kwadrans i działa</h2>
+      <p class="lede">Nic nie instalujesz, niczego nie przenosisz. Zostawiasz swój numer, swój grafik i swój sposób pracy.</p>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <div class="shot"><div class="curtain"></div><img src="assets/krok-1.jpg" alt="Dwie nitki światła łączą się w jedną" loading="lazy"></div>
+        <div class="body"><p class="n">KROK 01</p><h3>Podłączasz numer i Instagram</h3><p>Przekierowujesz telefon salonu i klikasz zgodę na Instagramie. Robisz to raz, zajmuje kwadrans.</p></div>
+      </article>
+      <article class="step">
+        <div class="shot"><div class="curtain"></div><img src="assets/krok-2.jpg" alt="Kula światła z pierścieni wchłaniająca nitki światła" loading="lazy"></div>
+        <div class="body"><p class="n">KROK 02</p><h3>Receply uczy się Twojego salonu</h3><p>Wgrywasz cennik, zabiegi i godziny. Albo wklejasz link do swojego profilu Booksy, a resztę odczyta sama.</p></div>
+      </article>
+      <article class="step">
+        <div class="shot"><div class="curtain"></div><img src="assets/krok-3.jpg" alt="Siatka świetlnych pasków grafiku z jednym zielonym" loading="lazy"></div>
+        <div class="body"><p class="n">KROK 03</p><h3>Wizyty lądują w kalendarzu</h3><p>Klientka rozmawia, Receply rezerwuje termin i dzień wcześniej wysyła przypomnienie. Ty widzisz gotowy grafik.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOŻLIWOŚCI ============ -->
+<section class="sec" id="mozliwosci">
+  <div class="shell">
+    <svg class="wave-rule" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true"><path d="M0 19h240l16-13 14 26 15-30 16 34 14-22 15 12 16-9 14 5h806"/></svg>
+    <div class="sec-head rise">
+      <p class="label">03 · Co bierze na siebie</p>
+      <h2>Wszystko, czego nie zdążysz</h2>
+      <p class="lede">Receply nie zastępuje recepcji przy fotelu. Bierze to, co się nie mieści: nadmiar telefonów, wieczory, weekendy i wiadomości.</p>
+    </div>
+
+    <div class="bento">
+      <div class="cell c-2 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div>
+        <h3>Odbiera w dwie sekundy</h3><p>O ósmej rano, w sobotę o dwudziestej drugiej i w środku Twojego zabiegu. Zawsze tym samym tonem.</p>
+      </div>
+      <div class="cell c-2 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Odpisuje na Instagramie</h3><p>Wiadomości prywatne i komentarze pod postami. Tam, gdzie dziś Twoje klientki naprawdę pytają o termin.</p>
+      </div>
+      <div class="cell c-2 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 11h18M9 16l2 2 4-4"/></svg></div>
+        <h3>Rezerwuje, przekłada, odwołuje</h3><p>Wpisuje wizytę w Twój grafik, pilnuje długości zabiegu i przerw. Zwolniony termin od razu wraca do puli.</p>
+      </div>
+      <div class="cell c-3 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zM18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/></svg></div>
+        <h3>Przypomina dzień wcześniej</h3><p>Krótka wiadomość na dobę przed wizytą i pytanie, czy termin dalej pasuje. Zapominalskie klientki to największa grupa nieobecności, a jedno przypomnienie zamyka temat.</p>
+      </div>
+      <div class="cell c-3 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 1 1 4.5 2.6c-.9.5-1.6 1.2-1.6 2.4M12 17.5h.01"/></svg></div>
+        <h3>Nie zmyśla</h3><p>Kiedy pytanie wykracza poza to, co wie, mówi o tym wprost, bierze numer i przekazuje sprawę Tobie. Możesz też ustawić przekierowanie na swój telefon.</p>
+      </div>
+      <div class="cell c-2 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></div>
+        <h3>Mówi trzema językami</h3><p>Po polsku, ukraińsku i angielsku. Przełącza się na język klientki w trakcie rozmowy.</p>
+      </div>
+      <div class="cell c-2 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V5M4 19h16M8 16V9M12 16v-4M16 16v-7M20 16V6"/></svg></div>
+        <h3>Podsumowanie dnia</h3><p>Wieczorem dostajesz jedną wiadomość: ile rozmów, ile rezerwacji, co wymaga Twojej decyzji.</p>
+      </div>
+      <div class="cell c-2 rise">
+        <div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h3>Uczciwa wobec klientki</h3><p>Na starcie mówi, że jest asystentem salonu. Bez udawania człowieka, bo to najszybsza droga do skargi.</p>
+      </div>
+
+      <div class="cell c-6 rise" style="padding:26px 0">
+        <div class="mq" style="padding-bottom:12px"><div class="mq-track" id="mq1"></div></div>
+        <div class="mq"><div class="mq-track rev" id="mq2"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROZMOWA ============ -->
+<section class="sec" id="rozmowa">
+  <div class="shell">
+    <svg class="wave-rule" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true"><path d="M0 19h240l16-13 14 26 15-30 16 34 14-22 15 12 16-9 14 5h806"/></svg>
+    <div class="sec-head rise">
+      <p class="label">04 · Rozmowa</p>
+      <h2>Zobacz, jak to brzmi</h2>
+      <p class="lede">Prawdziwy telefon w piątek o 19:40, kiedy salon jest już zamknięty. Naciśnij i przewiń rozmowę od początku.</p>
+    </div>
+
+    <div class="demo">
+      <div class="phone rise">
+        <div class="phone-top">
+          <div class="caller"><span class="dot"></span><div><strong>Połączenie przychodzące</strong><small>+48 •• ••• 214 · piątek, 19:40</small></div></div>
+          <span class="timer" id="timer">00:00</span>
+        </div>
+        <div class="thread" id="thread">
+          <div class="msg them"><span class="who">Klientka</span>Dzień dobry, chciałam się zapisać na koloryzację. Macie coś w sobotę?</div>
+          <div class="msg us"><span class="who">Receply</span>Dzień dobry, tu asystent salonu Nova. Koloryzacja trwa u nas dwie i pół godziny. W sobotę jest wolne o 10:00 i o 15:30.</div>
+          <div class="msg them"><span class="who">Klientka</span>To poproszę 15:30. Ile to kosztuje?</div>
+          <div class="msg us"><span class="who">Receply</span>Koloryzacja na długich włosach to 320 złotych. Zapisuję na sobotę 15:30. Na jakie imię?</div>
+          <div class="msg them"><span class="who">Klientka</span>Marta Zielińska.</div>
+          <div class="msg us"><span class="who">Receply</span>Gotowe. W piątek wieczorem wyślę przypomnienie. Do zobaczenia w sobotę.</div>
+          <div class="booked" id="booked">
+            <p class="t">Wizyta w kalendarzu</p>
+            <p class="v">Sobota, 15:30 · Koloryzacja · Marta Zielińska</p>
+            <p class="m">320 zł · 2 h 30 min · przypomnienie ustawione na piątek 18:00</p>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="play" style="width:100%">Odtwórz rozmowę</button>
+      </div>
+
+      <div class="demo-side rise">
+        <h3 style="font-size:clamp(24px,2.6vw,34px)">Cztery rzeczy dzieją się tu naraz</h3>
+        <ul class="list">
+          <li><svg class="mk" viewBox="0 0 16 7" fill="none" stroke="#8FB0FF" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.5h2l1.4-2.5L6 6l1.6-4.5L9 5l1.3-2 1.2 1H15"/></svg><span><b>Zna Twój cennik i długość zabiegu.</b> Nie podaje widełek, tylko konkretną cenę i realny czas.</span></li>
+          <li><svg class="mk" viewBox="0 0 16 7" fill="none" stroke="#8FB0FF" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.5h2l1.4-2.5L6 6l1.6-4.5L9 5l1.3-2 1.2 1H15"/></svg><span><b>Widzi wolne okna w grafiku.</b> Proponuje tylko te, w które zabieg naprawdę się zmieści.</span></li>
+          <li><svg class="mk" viewBox="0 0 16 7" fill="none" stroke="#8FB0FF" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.5h2l1.4-2.5L6 6l1.6-4.5L9 5l1.3-2 1.2 1H15"/></svg><span><b>Przedstawia się na starcie.</b> Klientka wie, z kim rozmawia, i to właśnie ucina skargi.</span></li>
+          <li><svg class="mk" viewBox="0 0 16 7" fill="none" stroke="#8FB0FF" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.5h2l1.4-2.5L6 6l1.6-4.5L9 5l1.3-2 1.2 1H15"/></svg><span><b>Zamyka pętlę.</b> Wizyta w kalendarzu, przypomnienie w kolejce, Ty nie robisz nic.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INTEGRACJE ============ -->
+<section class="sec" style="padding-top:0">
+  <div class="shell">
+    <div class="sec-head rise"><p class="label">05 · Integracje</p><h2>Wpina się w to, czego już używasz</h2></div>
+    <div class="integr rise">
+      <div><span class="g"></span>Booksy</div>
+      <div><span class="g"></span>Google Calendar</div>
+      <div><span class="g"></span>Kalendarz Apple</div>
+      <div><span class="g"></span>Instagram</div>
+      <div><span class="g"></span>Messenger</div>
+      <div><span class="g"></span>Numer stacjonarny i komórkowy</div>
+      <div class="soon"><span class="g"></span>WhatsApp, wkrótce</div>
+      <div class="soon"><span class="g"></span>Moment, wkrótce</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CENNIK ============ -->
+<section class="sec" id="cennik">
+  <div class="shell">
+    <svg class="wave-rule" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true"><path d="M0 19h240l16-13 14 26 15-30 16 34 14-22 15 12 16-9 14 5h806"/></svg>
+    <div class="sec-head rise">
+      <p class="label">06 · Cennik</p>
+      <h2>Tanio w porównaniu z jedną straconą klientką</h2>
+      <p class="lede">Ceny wczesnego dostępu. Płacisz za miesiąc, rezygnujesz kiedy chcesz.</p>
+    </div>
+    <div class="plans">
+      <div class="plan rise">
+        <p class="tag">Start</p><h3>Jedno stanowisko</h3>
+        <p class="who">Dla osób pracujących samodzielnie, w gabinecie albo w wynajętym fotelu.</p>
+        <p class="price">149 zł<small> / miesiąc</small></p>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Do 100 rozmów miesięcznie</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Jeden numer telefonu</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Instagram i Messenger</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Kalendarz Google lub Apple</li>
+        </ul>
+        <a class="btn btn-ghost" href="#zapis">Wybieram Start</a>
+      </div>
+      <div class="plan hot rise">
+        <p class="tag">Salon · najczęściej wybierany</p><h3>Cały zespół</h3>
+        <p class="who">Dla salonu z kilkoma stanowiskami i grafikiem, który trzeba pilnować.</p>
+        <p class="price">299 zł<small> / miesiąc</small></p>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Do 400 rozmów miesięcznie</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Trzy numery i grafik zespołu</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Integracja z Booksy</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Przypomnienia SMS przed wizytą</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Podsumowanie dnia na telefon</li>
+        </ul>
+        <a class="btn btn-primary" href="#zapis">Wybieram Salon</a>
+      </div>
+      <div class="plan rise">
+        <p class="tag">Sieć</p><h3>Kilka lokali</h3>
+        <p class="who">Dla marek z więcej niż jednym adresem i wspólną obsługą klienta.</p>
+        <p class="price">699 zł<small> / miesiąc</small></p>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Rozmowy bez limitu</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Wiele lokalizacji w jednym panelu</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Raporty i nagrania rozmów</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Umowa powierzenia danych</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7.5 5.5 11 12 3.5"/></svg>Opiekun i wsparcie w jeden dzień roboczy</li>
+        </ul>
+        <a class="btn btn-ghost" href="#zapis">Porozmawiajmy</a>
+      </div>
+    </div>
+    <p class="plan-note">Pierwsze 30 dni bez opłat · bez karty · bez umowy na lata</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="shell">
+    <div class="sec-head rise"><p class="label">07 · Pytania</p><h2>To, o co pytają najczęściej</h2></div>
+    <div class="faq">
+      <div class="q"><button type="button">Czy klientka pozna, że to nie człowiek?</button><div class="a"><p>Receply mówi to sama, w pierwszym zdaniu: jest asystentem salonu. Tak jest uczciwie i tak po prostu wychodzi lepiej. Salony, które mówią o tym wprost, dostają zdecydowanie mniej skarg niż te, które próbują udawać człowieka.</p></div></div>
+      <div class="q"><button type="button">Czy to zabrzmi jak robot?</button><div class="a"><p>Mówi po polsku naturalnie, z pauzami i oddechem, i odpowiada w około dwie sekundy. Ton wybierasz sam, od ciepłego po rzeczowy. Możesz też wgrać przykładowe zdania, żeby brzmiała jak Twój salon, a nie jak infolinia.</p></div></div>
+      <div class="q"><button type="button">Co się dzieje, kiedy nie zna odpowiedzi?</button><div class="a"><p>Nie zgaduje. Mówi, że musi dopytać, bierze numer i wysyła Ci wiadomość. Możesz też ustawić, żeby w takich sytuacjach od razu przełączała rozmowę na Twój telefon albo na recepcję.</p></div></div>
+      <div class="q"><button type="button">Czy działa z Booksy?</button><div class="a"><p>Tak. Podpinasz konto Booksy i Receply rezerwuje bezpośrednio w Twoim grafiku, pilnując długości zabiegu i przerw. Działa też z Google Calendar i kalendarzem Apple. Jeżeli prowadzisz grafik w zeszycie, zacznij od kalendarza Google, resztę zrobimy za Ciebie.</p></div></div>
+      <div class="q"><button type="button">Co z danymi klientek?</button><div class="a"><p>Rozmowy i wiadomości są szyfrowane, a dane przetwarzane na serwerach w Unii Europejskiej. Podpisujemy umowę powierzenia przetwarzania danych. Nagrywanie rozmów możesz wyłączyć jednym przełącznikiem, a numery klientek zostają wyłącznie u Ciebie.</p></div></div>
+      <div class="q"><button type="button">Czy Receply zwolni moją recepcję?</button><div class="a"><p>Nie o to chodzi. Recepcja jest w salonie po to, żeby przywitać klientkę, podać kawę i przyjąć płatność. Receply bierze to, czego człowiek przy fotelu i tak nie zdąży odebrać: nadmiar telefonów, wieczory, weekendy i wiadomości na Instagramie.</p></div></div>
+      <div class="q"><button type="button">Ile trwa wdrożenie?</button><div class="a"><p>Kwadrans na start i jeden dzień na dopieszczenie odpowiedzi. Nie instalujesz żadnego programu i nie zmieniasz numeru. Przez pierwszy tydzień czytasz zapisy rozmów i poprawiasz to, co Ci się nie podoba, jednym zdaniem.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZAPIS ============ -->
+<section class="sec" id="zapis" style="padding-top:0">
+  <div class="shell">
+    <div class="final rise">
+      <div class="inner">
+        <p class="label">Wczesny dostęp</p>
+        <h2 style="margin-top:16px">Zostaw numer sobie. Telefon zostaw nam.</h2>
+        <p class="lede" style="margin-top:20px">Otwieramy Receply salonom po kolei, żeby każdy start dopiąć osobiście. Zostaw adres, a odezwiemy się z terminem i konkretami.</p>
+
+        <form id="form" novalidate>
+          <input type="text" name="imie" placeholder="Imię" autocomplete="given-name" required>
+          <input type="text" name="salon" placeholder="Nazwa salonu" autocomplete="organization">
+          <input class="full" type="email" name="email" placeholder="Adres e-mail" autocomplete="email" required>
+          <button class="btn btn-primary full" type="submit">Zapisz mnie na wczesny dostęp</button>
+        </form>
+        <p class="form-note" id="note">Pierwsze 100 salonów dostaje trzy miesiące w cenie jednego. Bez karty i bez umowy.</p>
+
+        <div class="thanks" id="thanks" role="status">
+          <h3>Jesteś na liście.</h3>
+          <p>Odezwiemy się z terminem uruchomienia i pytaniem o Twój cennik, żeby Receply od pierwszego dnia mówiła Twoimi cenami.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top">
+          <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true"><path d="M1 9h3l2-6 2.6 13L11.5 2l2.4 14 2.2-9 1.9 5h6" stroke="#8FB0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Receply
+        </a>
+        <p style="color:var(--muted);font-size:14.5px;margin-top:14px;max-width:32ch">Recepcjonistka AI dla salonów beauty. Odbiera, odpisuje i rezerwuje, kiedy Ty pracujesz.</p>
+      </div>
+      <div class="cols">
+        <div><h4>Produkt</h4><ul><li><a href="#jak">Jak to działa</a></li><li><a href="#mozliwosci">Możliwości</a></li><li><a href="#rozmowa">Rozmowa</a></li><li><a href="#cennik">Cennik</a></li></ul></div>
+        <div><h4>Wiedza</h4><ul><li><a href="#faq">Pytania</a></li><li><a href="#zapis">Wczesny dostęp</a></li></ul></div>
+        <div><h4>Kontakt</h4><ul><li><a href="#zapis">Zapisz się na listę</a></li></ul></div>
+      </div>
+    </div>
+    <p class="disc"><b>Strona demonstracyjna.</b> Receply jest projektem w przygotowaniu, a produkt nie jest jeszcze dostępny publicznie. Grafika i wideo na tej stronie zostały wygenerowane przez sztuczną inteligencję. Rozmowa w sekcji „Zobacz, jak to brzmi” to przykład, a nie nagranie prawdziwej klientki. Liczby w sekcji o nieodebranych telefonach pochodzą z publicznych raportów o obsłudze połączeń w salonach usługowych i mają charakter poglądowy.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $  = function(s,c){return (c||document).querySelector(s)};
+var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+var REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------------- nawigacja ---------------- */
+var head = $("header");
+addEventListener("scroll", function(){ head.classList.toggle("solid", scrollY > 40); }, {passive:true});
+
+/* ---------------- wejścia sekcji ---------------- */
+var waiting = $$(".rise, .wave-rule, .step");
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting) reveal(e.target); });
+},{threshold:.14, rootMargin:"0px 0px -6% 0px"});
+waiting.forEach(function(el, i){
+  if(el.classList.contains("rise")) el.style.transitionDelay = (i % 3) * 90 + "ms";
+  io.observe(el);
+});
+function reveal(el){
+  el.classList.add("in"); io.unobserve(el);
+  var i = waiting.indexOf(el); if(i > -1) waiting.splice(i, 1);
+}
+/* zapasowe sprawdzenie: skok z menu albo wejscie z adresem z kotwica
+   potrafi wyprzedzic obserwatora, wiec nic nie zostaje niewidoczne */
+var sweeping = false;
+function sweep(){
+  sweeping = false;
+  if(!waiting.length) return;
+  var vh = innerHeight;
+  waiting.slice().forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if(r.top < vh * 0.94 && r.bottom > 0) reveal(el);
+  });
+}
+function queueSweep(){ if(!sweeping && waiting.length){ sweeping = true; requestAnimationFrame(sweep); } }
+addEventListener("scroll", queueSweep, {passive:true});
+addEventListener("resize", queueSweep);
+addEventListener("hashchange", function(){ setTimeout(sweep, 80); });
+addEventListener("load", sweep);
+setTimeout(sweep, 120);
+
+/* ---------------- warstwa tła: pył ---------------- */
+(function(){
+  if(REDUCE) return;
+  var cv = $("#dust"), ctx = cv.getContext("2d"), w, h, dots = [];
+  function size(){
+    var r = Math.min(devicePixelRatio || 1, 2);
+    w = cv.width = innerWidth * r; h = cv.height = innerHeight * r;
+    dots = [];
+    var n = Math.min(70, Math.round(innerWidth / 22));
+    for(var i=0;i<n;i++) dots.push({x:Math.random()*w, y:Math.random()*h, r:(Math.random()*1.5+.4)*r, s:(Math.random()*.16+.04)*r, a:Math.random()*.4+.12});
+  }
+  size(); addEventListener("resize", size);
+  (function loop(){
+    ctx.clearRect(0,0,w,h);
+    for(var i=0;i<dots.length;i++){
+      var d = dots[i]; d.y -= d.s; if(d.y < -6){ d.y = h + 6; d.x = Math.random()*w; }
+      ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 6.284);
+      ctx.fillStyle = "rgba(160,190,255," + d.a + ")"; ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* poświata wędrująca ze scrollem */
+(function(){
+  var glow = $("#glow"), last = -1;
+  addEventListener("scroll", function(){
+    var p = Math.round(scrollY / Math.max(1, document.body.scrollHeight - innerHeight) * 20);
+    if(p === last) return; last = p;
+    glow.style.transform = "translate(-50%," + (-55 + p * 1.4) + "%)";
+    glow.style.opacity = String(1 - Math.min(.55, p / 34));
+  }, {passive:true});
+})();
+
+/* ---------------- hero: przewijane wideo ---------------- */
+(function(){
+  var hero = $("#hero"), video = $("#scrub"), poster = $("#poster"),
+      ring = $("#ring"), bar = $("#ringbar"), ringtxt = $("#ringtxt"),
+      settle = $("#settle"), cue = $("#cue"), bands = $$("[data-band]");
+
+  var WIN = [[-0.04,0.18],[0.21,0.37],[0.40,0.58],[0.61,0.79]];
+  var SETTLE_AT = 0.84;
+
+  function staticHero(){
+    hero.classList.add("static-hero");
+    var b = $(".bands"); if(b) b.remove();
+    if(cue) cue.remove(); if(ring) ring.remove();
+    settle.classList.add("on");
+  }
+
+  var conn = navigator.connection || navigator.webkitConnection;
+  var slow = !!(conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")));
+  if(REDUCE || innerWidth < 901 || location.protocol === "file:" || slow || !video.canPlayType("video/mp4")){
+    staticHero(); return;
+  }
+
+  /* pobranie pliku jako Blob, z uczciwym pierścieniem postępu */
+  ring.hidden = false;
+  fetch("assets/hero.mp4").then(function(res){
+    if(!res.ok) throw new Error("http " + res.status);
+    var total = +(res.headers.get("content-length") || 0);
+    if(!res.body || !total) return res.blob();
+    var reader = res.body.getReader(), chunks = [], got = 0, shown = -1;
+    return (function pump(){
+      return reader.read().then(function(r){
+        if(r.done) return new Blob(chunks, {type:"video/mp4"});
+        chunks.push(r.value); got += r.value.length;
+        var pct = Math.round(got / total * 100);
+        if(pct !== shown){ shown = pct; bar.style.strokeDashoffset = String(75.4 - 75.4 * pct / 100); ringtxt.textContent = "Wczytywanie " + pct + "%"; }
+        return pump();
+      });
+    })();
+  }).then(function(blob){
+    video.src = URL.createObjectURL(blob);
+    video.load();
+  }).catch(function(){ staticHero(); });
+
+  var dur = 0, cur = 0, target = 0, running = false, ready = false, lastSeek = 0;
+
+  video.addEventListener("loadedmetadata", function(){
+    dur = video.duration || 6;
+    ready = true;
+    video.classList.add("on"); poster.classList.add("off"); ring.classList.add("done");
+    onScroll(); start();
+  });
+  video.addEventListener("error", staticHero);
+
+  /* jeden przeskok naraz: natywna flaga przegladarki plus bezpiecznik czasowy,
+     zeby zgubiony event nigdy nie zamrozil calego przewijania */
+  function seek(t){
+    if(!ready) return;
+    if(Math.abs(video.currentTime - t) < 1/48) return;
+    if(video.seeking && performance.now() - lastSeek < 220) return;
+    lastSeek = performance.now();
+    try{ video.currentTime = t; }catch(e){}
+  }
+
+  /* wygladzanie liczone zegarem, nie klatkami: na wolnym sprzecie
+     obraz dogania scroll w tym samym czasie, tylko mniej plynnie */
+  var prev = 0;
+  function tick(now){
+    var dt = prev ? Math.min(0.1, (now - prev) / 1000) : 1 / 60;
+    prev = now;
+    var d = target - cur;
+    if(Math.abs(d) < 0.005){ cur = target; seek(cur); running = false; prev = 0; return; }
+    cur += d * (1 - Math.pow(0.0002, dt));
+    seek(cur);
+    requestAnimationFrame(tick);
+  }
+  function start(){ if(!running){ running = true; prev = 0; requestAnimationFrame(tick); } }
+
+  var lastOp = [0,0,0,0], lastSettle = null, lastCue = null;
+  function onScroll(){
+    var top = hero.offsetTop, span = hero.offsetHeight - innerHeight;
+    var p = Math.min(1, Math.max(0, (scrollY - top) / Math.max(1, span)));
+    target = p * (dur || 6);
+
+    for(var i=0;i<bands.length;i++){
+      var w = WIN[i], o = 0, y = 18;
+      if(p >= w[0] && p <= w[1]){
+        var l = (p - w[0]) / (w[1] - w[0]);
+        o = l < 0.22 ? l / 0.22 : (l > 0.78 ? (1 - l) / 0.22 : 1);
+        o = Math.max(0, Math.min(1, o));
+        y = 18 - 18 * Math.min(1, l / 0.22);
+      }
+      if(Math.abs(o - lastOp[i]) > 0.012){
+        lastOp[i] = o;
+        bands[i].style.opacity = o.toFixed(3);
+        bands[i].style.transform = "translateY(" + y.toFixed(1) + "px)";
+      }
+    }
+    var s = p >= SETTLE_AT;
+    if(s !== lastSettle){ lastSettle = s; settle.classList.toggle("on", s); }
+    var c = p < 0.05;
+    if(c !== lastCue){ lastCue = c; cue.style.opacity = c ? "1" : "0"; }
+    start();
+  }
+  addEventListener("scroll", onScroll, {passive:true});
+  addEventListener("resize", onScroll);
+  onScroll();
+})();
+
+/* ---------------- liczniki bębenkowe ---------------- */
+$$(".odo").forEach(function(el){
+  var val = el.getAttribute("data-odo"), pre = el.getAttribute("data-pre") || "", suf = el.getAttribute("data-suf") || "";
+  var html = pre ? "<span>" + pre + "</span>" : "";
+  val.split("").forEach(function(d){
+    var strip = "0123456789".split("").map(function(x){ return "<i>" + x + "</i>"; }).join("") + "<i>" + d + "</i>";
+    html += '<span class="reel"><span class="strip">' + strip + "</span></span>";
+  });
+  if(suf) html += '<span class="suf">' + suf + "</span>";
+  el.innerHTML = html;
+
+  var reels = $$(".reel .strip", el);
+  var obs = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      reels.forEach(function(r, i){
+        if(REDUCE){ r.style.transition = "none"; r.style.transform = "translateY(-10em)"; return; }
+        setTimeout(function(){ r.style.transform = "translateY(-10em)"; }, i * 130);
+      });
+      obs.disconnect();
+    });
+  },{threshold:.5});
+  obs.observe(el);
+});
+
+/* ---------------- zdanie wyostrzane słowo po słowie ---------------- */
+(function(){
+  var el = $("#stmt"); if(!el) return;
+  var hl = (el.getAttribute("data-hl") || "").split(",");
+  var words = el.textContent.trim().split(/\s+/);
+  el.innerHTML = words.map(function(w, i){
+    return "<w" + (hl.indexOf(String(i)) > -1 ? ' class="hl"' : "") + ">" + w + "</w>";
+  }).join(" ");
+  var ws = $$("w", el);
+  if(REDUCE){ ws.forEach(function(w){ w.classList.add("sharp"); }); return; }
+  var lastN = -1;
+  function upd(){
+    var r = el.getBoundingClientRect();
+    var p = (innerHeight * 0.86 - r.top) / (innerHeight * 0.55);
+    p = Math.max(0, Math.min(1, p));
+    var n = Math.round(p * ws.length);
+    if(n === lastN) return; lastN = n;
+    for(var i=0;i<ws.length;i++) ws[i].classList.toggle("sharp", i < n);
+  }
+  addEventListener("scroll", upd, {passive:true}); addEventListener("resize", upd); upd();
+})();
+
+/* ---------------- pasek pytań ---------------- */
+(function(){
+  var A = [["TEL","Ile kosztuje koloryzacja?"],["DM","Macie wolny termin w sobotę?"],["TEL","Chcę przełożyć wizytę"],["DM","O której dziś zamykacie?"],["DM","Robicie balejaż na ciemnych włosach?"],["TEL","Można płacić kartą?"]];
+  var B = [["DM","Ile trwa manicure hybrydowy?"],["TEL","Czy jest gdzie zaparkować?"],["DM","Mam pytanie o przeciwwskazania"],["TEL","Chcę odwołać jutrzejszą wizytę"],["DM","Macie karty podarunkowe?"],["TEL","Przyjmujecie w niedzielę?"]];
+  function fill(node, rows){
+    var one = rows.map(function(r){ return '<span class="pill"><b>' + r[0] + "</b>" + r[1] + "</span>"; }).join("");
+    node.innerHTML = one + one;
+  }
+  fill($("#mq1"), A); fill($("#mq2"), B);
+})();
+
+/* ---------------- odtwarzacz rozmowy ---------------- */
+(function(){
+  var btn = $("#play"), msgs = $$("#thread .msg"), booked = $("#booked"), timer = $("#timer"), t0, iv, timeouts = [];
+  function reset(){
+    timeouts.forEach(clearTimeout); timeouts = []; clearInterval(iv);
+    msgs.forEach(function(m){ m.classList.remove("show"); });
+    booked.classList.remove("show"); timer.textContent = "00:00";
+  }
+  function showAll(){ msgs.forEach(function(m){ m.classList.add("show"); }); booked.classList.add("show"); timer.textContent = "00:38"; }
+  btn.addEventListener("click", function(){
+    reset();
+    if(REDUCE){ showAll(); btn.textContent = "Odtwórz ponownie"; return; }
+    btn.textContent = "Rozmowa trwa";
+    t0 = Date.now();
+    iv = setInterval(function(){
+      var s = Math.floor((Date.now() - t0) / 1000);
+      timer.textContent = "00:" + (s < 10 ? "0" : "") + s;
+    }, 500);
+    var delay = 350;
+    msgs.forEach(function(m, i){
+      timeouts.push(setTimeout(function(){ m.classList.add("show"); }, delay));
+      delay += 900 + m.textContent.length * 22;
+    });
+    timeouts.push(setTimeout(function(){
+      booked.classList.add("show"); clearInterval(iv); btn.textContent = "Odtwórz ponownie";
+    }, delay + 300));
+  });
+})();
+
+/* ---------------- pytania ---------------- */
+$$(".q").forEach(function(q){
+  var b = q.querySelector("button"), a = q.querySelector(".a");
+  b.setAttribute("aria-expanded", "false");
+  b.addEventListener("click", function(){
+    var open = q.classList.toggle("open");
+    b.setAttribute("aria-expanded", open ? "true" : "false");
+    a.style.height = open ? a.scrollHeight + "px" : "0px";
+  });
+  addEventListener("resize", function(){ if(q.classList.contains("open")) a.style.height = a.scrollHeight + "px"; });
+});
+
+/* ---------------- poświata pod kursorem w bento ---------------- */
+$$(".cell").forEach(function(c){
+  c.addEventListener("pointermove", function(e){
+    var r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    c.style.setProperty("--my", (e.clientY - r.top) + "px");
+  });
+});
+
+/* ---------------- formularz ---------------- */
+(function(){
+  var f = $("#form"), thanks = $("#thanks"), note = $("#note");
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    var mail = f.email.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)){ f.email.focus(); f.email.style.borderColor = "#FF7A7A"; return; }
+    f.classList.add("gone"); note.style.display = "none"; thanks.classList.add("show");
+    thanks.scrollIntoView({block:"center", behavior: REDUCE ? "auto" : "smooth"});
+  });
+  f.email.addEventListener("input", function(){ f.email.style.borderColor = ""; });
+})();
+
+})();
+</script>
+</body>
+</html>
