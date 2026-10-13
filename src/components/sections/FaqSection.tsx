@@ -1,14 +1,22 @@
-// FAQ: adaptacja BYQ Reforma FAQ 1 („Centered FAQ Accordion Section") —
-// wycentrowany nagłówek, karty akordeonu ~42.5rem z pigułkowym plusem
-// (pionowa kreska znika/obraca się przy otwarciu), max-height transition,
-// wejścia fade-up nagłówka i bloku z opóźnieniem.
+// FAQ: dwie kolumny — po lewej przyklejony nagłówek z kartą kontaktu, po
+// prawej akordeon z obiekcjami z badań (robot, RODO, „co jeśli nie wie",
+// wdrożenie, rezygnacja, limit). Odpowiedzi tylko z faktów ze strony.
 import * as React from 'react';
-import { Reveal } from '@/lib/ui';
+import { Mail, Plus } from 'lucide-react';
+import { Card, PillButton, Reveal, Section, SectionHeading } from '@/lib/ui';
 
 const FAQS = [
   {
     q: 'Czy klienci zorientują się, że rozmawiają z AI?',
     a: 'Receply mówi naturalnym głosem i prowadzi płynną rozmowę po polsku, więc rozmowa brzmi jak z dobrą recepcją. Nie ukrywamy jednak, że to asystent — jeśli klient zapyta wprost, Receply odpowiada szczerze. W praktyce klientom zależy na jednym: szybko załatwić sprawę i dostać termin. To dostają.',
+  },
+  {
+    q: 'Co z danymi moich klientów i RODO?',
+    a: 'Dane Twoje i Twoich klientów są przetwarzane w UE, szyfrowane i nie są nikomu odsprzedawane. Umowa powierzenia przetwarzania danych jest w standardzie.',
+  },
+  {
+    q: 'Co, jeśli Receply nie zna odpowiedzi?',
+    a: 'Ważne i nietypowe sprawy Receply przekazuje bezpośrednio Tobie — dostajesz powiadomienie z podsumowaniem rozmowy, żeby oddzwonić albo odpisać. Zakres tego, co Receply załatwia samodzielnie, ustalamy razem na wdrożeniu.',
   },
   {
     q: 'Ile trwa wdrożenie?',
@@ -25,61 +33,81 @@ const FAQS = [
 ];
 
 export function FaqSection() {
-  const [open, setOpen] = React.useState<number | null>(null);
+  const [open, setOpen] = React.useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-32 max-[767px]:py-20">
-      <div className="px-6">
-        <Reveal className="max-w-[680px] mx-auto mb-14 text-center max-[767px]:mb-10">
-          <h2 className="font-normal text-[clamp(1.8rem,3.4vw,2.8rem)] leading-[1.15] tracking-[-0.03em] m-0">
-            Masz pytania?
-            <br />
-            Dobrze, że pytasz.
-          </h2>
-        </Reveal>
-
-        <Reveal delay={150} className="w-full max-w-[680px] mx-auto flex flex-col gap-4 max-[767px]:gap-3">
-          {FAQS.map((faq, i) => {
-            const isOpen = open === i;
-            return (
-              <div
-                key={i}
-                className="bg-depth rounded-xl p-6 max-[767px]:p-5 cursor-pointer"
-                onClick={() => setOpen(isOpen ? null : i)}
-              >
-                <div className="flex justify-between items-center gap-6 max-[767px]:gap-4">
-                  <div className="text-lg max-[767px]:text-base font-medium m-0">{faq.q}</div>
-                  <div className="relative flex-none flex justify-center items-center w-12 h-10 max-[767px]:w-9 max-[767px]:h-9 rounded-full bg-ink/8">
-                    <div className="absolute bg-ink rounded-[1px] w-3 h-[1.5px]" />
-                    <div
-                      className={`absolute bg-ink rounded-[1px] w-[1.5px] h-3 transition-all duration-300 ${
-                        isOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
-                      }`}
-                    />
+    <Section id="faq" labelledBy="faq-title">
+      <div className="grid grid-cols-12 gap-x-16 gap-y-10 max-[991px]:grid-cols-1">
+        <div className="col-span-5 max-[991px]:col-span-1">
+          <div className="sticky top-28">
+            <SectionHeading
+              id="faq-title"
+              eyebrow="FAQ"
+              title="Pytania, które słyszymy"
+              muted="najczęściej."
+            />
+            <Reveal delay={100}>
+              <Card className="p-6 mt-10 max-[991px]:mt-8">
+                <div className="flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-full bg-blu/10 text-blu flex items-center justify-center flex-none">
+                    <Mail size={16} strokeWidth={2} aria-hidden />
+                  </span>
+                  <div>
+                    <div className="text-[15px] font-medium">Nie ma Twojego pytania?</div>
+                    <div className="text-[13.5px] text-ink/64">Odpowiadamy tego samego dnia.</div>
                   </div>
                 </div>
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? 'max-h-[500px]' : 'max-h-0'
-                  }`}
-                >
-                  <p className="text-ink/64 leading-relaxed m-0 pt-6 max-[767px]:pt-4 text-[15px]">{faq.a}</p>
-                </div>
-              </div>
-            );
-          })}
-        </Reveal>
+                <PillButton href="mailto:kontakt@receply.com" variant="ghost" className="mt-5 w-full">
+                  kontakt@receply.com
+                </PillButton>
+              </Card>
+            </Reveal>
+          </div>
+        </div>
 
-        <Reveal delay={250} className="text-center mt-10">
-          <span className="text-ink/64 text-[15px]">
-            Nie znalazłeś swojego pytania?{' '}
-            <a href="mailto:kontakt@receply.com" className="text-blu underline-offset-2 hover:underline">
-              kontakt@receply.com
-            </a>{' '}
-            — odpowiadamy tego samego dnia.
-          </span>
+        <Reveal delay={120} className="col-span-7 max-[991px]:col-span-1">
+          <div className="border-t border-ink/8">
+            {FAQS.map((faq, i) => {
+              const isOpen = open === i;
+              return (
+                <div key={faq.q} className="border-b border-ink/8">
+                  <h3>
+                    <button
+                      type="button"
+                      id={`faq-q-${i}`}
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-a-${i}`}
+                      onClick={() => setOpen(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between gap-6 py-6 text-left text-[17px] font-medium cursor-pointer rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blu"
+                    >
+                      {faq.q}
+                      <span
+                        className={`flex-none w-8 h-8 rounded-full border border-ink/12 flex items-center justify-center transition-[rotate,background-color,color,border-color] duration-300 ${
+                          isOpen ? 'rotate-45 bg-ink text-cream border-ink' : 'text-ink'
+                        }`}
+                      >
+                        <Plus size={15} strokeWidth={2} aria-hidden />
+                      </span>
+                    </button>
+                  </h3>
+                  <div
+                    id={`faq-a-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-q-${i}`}
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                      isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="text-[15px] text-ink/64 leading-relaxed pb-6 pr-14 max-[767px]:pr-0">{faq.a}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </Reveal>
       </div>
-    </section>
+    </Section>
   );
 }

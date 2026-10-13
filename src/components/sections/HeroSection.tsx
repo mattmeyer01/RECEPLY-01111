@@ -4,7 +4,9 @@
 // Zamiast zdjęć: karty produktowego UI Receply w stylu widgetów Nextwell,
 // jak na arini.ai (voice call / DM / rezerwacja / przypomnienie).
 import * as React from 'react';
+import { Play } from 'lucide-react';
 import { Reveal, Eyebrow } from '@/lib/ui';
+import { PLAY_CALL_EVENT } from '@/components/sections/DemoSection';
 
 function WidgetShell({
   title,
@@ -181,18 +183,22 @@ export function HeroSection() {
               Umów bezpłatną rozmowę
             </a>
             <a
-              href="#demo"
-              className="inline-flex items-center rounded-full border border-ink/16 text-ink font-medium text-[15px] px-7 py-3.5 no-underline transition-colors duration-300 hover:bg-ink hover:text-cream"
+              href="#rozmowa"
+              onClick={() => window.dispatchEvent(new Event(PLAY_CALL_EVENT))}
+              className="inline-flex items-center gap-2 rounded-full border border-ink/16 text-ink font-medium text-[15px] px-7 py-3.5 no-underline transition-colors duration-300 hover:bg-ink hover:text-cream"
             >
-              Zobacz przykładową rozmowę
+              <Play size={14} fill="currentColor" strokeWidth={0} aria-hidden />
+              Posłuchaj przykładowej rozmowy
             </a>
           </div>
           <div className="flex items-center justify-center gap-2.5 flex-wrap mt-6">
             <span className="inline-flex items-center gap-2 rounded-full bg-white border border-ink/8 px-4 py-2 text-[13px] text-ink/64">
-              📞 Połączenia telefoniczne
+              <span className="text-blu inline-flex">{PhoneIcon}</span>
+              Połączenia telefoniczne
             </span>
             <span className="inline-flex items-center gap-2 rounded-full bg-white border border-ink/8 px-4 py-2 text-[13px] text-ink/64">
-              📷 Wiadomości na Instagramie
+              <span className="text-blu inline-flex">{CameraIcon}</span>
+              Wiadomości na Instagramie
             </span>
           </div>
         </Reveal>

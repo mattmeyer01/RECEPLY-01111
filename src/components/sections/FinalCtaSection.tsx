@@ -1,117 +1,102 @@
-// Finalne CTA: adaptacja BYQ Babka CTA 3 — zaokrąglona karta z pełnym tłem
-// obrazkowym (ilustracja hero z Higgsfield), ciemny scrim, parallax obrazu
-// przy scrollu, wielki biały nagłówek i frosted-glass pasek z pigułkowym CTA.
+// Finalne CTA: niebieska karta (kolor głównego przycisku z hero) z siatką
+// kropek i dwiema pływającymi kartami-widgetami jak w hero — domknięcie
+// strony tym samym językiem, którym się zaczyna. Dwa wyjścia: rozmowa
+// z zespołem albo odsłuchanie przykładowej rozmowy.
 import * as React from 'react';
+import { CalendarCheck, PhoneIncoming, Play } from 'lucide-react';
+import { PLAY_CALL_EVENT } from '@/components/sections/DemoSection';
+import { PillButton, Reveal, Section } from '@/lib/ui';
+
+function FloatCard({ className, children }: { className: string; children: React.ReactNode }) {
+  return (
+    <div
+      aria-hidden
+      className={`absolute w-[200px] rounded-xl bg-white text-ink border border-white/40 shadow-[0_24px_48px_-16px_rgba(10,20,90,0.45)] p-4 animate-floaty hidden min-[1280px]:block ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
 
 export function FinalCtaSection() {
-  const sectionRef = React.useRef<HTMLElement>(null);
-  const imgRef = React.useRef<HTMLImageElement>(null);
-  const innerRef = React.useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = React.useState(false);
-  const [btnHovered, setBtnHovered] = React.useState(false);
-
-  // Parallax obrazu (Babka: przesunięcie ~60px zależne od scrolla)
-  React.useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const onScroll = () => {
-      if (!imgRef.current || !sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const progress = -rect.top / window.innerHeight;
-      imgRef.current.style.transform = `scale(1.12) translateY(${progress * 60}px)`;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  React.useEffect(() => {
-    const el = innerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setVisible(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const enter = (delay: number) =>
-    ({
-      transitionDelay: `${delay}ms`,
-    }) as React.CSSProperties;
-
   return (
-    <section ref={sectionRef} id="cta" className="py-28 max-[767px]:py-16">
-      <div className="max-w-[1240px] mx-auto px-6 max-[767px]:px-4">
-        <div className="relative overflow-hidden rounded-[20px] min-h-[640px] max-[767px]:min-h-[560px] flex flex-col justify-center">
-          <img
-            ref={imgRef}
-            src="/hero.jpg"
-            alt="Ilustracja: AI recepcjonista Receply odbiera połączenie i odpowiada na wiadomości na Instagramie"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ transform: 'scale(1.12)' }}
+    <Section id="cta" labelledBy="cta-title">
+      <Reveal>
+        <div className="relative overflow-hidden rounded-[28px] bg-blu text-white px-8 py-24 max-[767px]:px-6 max-[767px]:py-16 text-center">
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px)',
+              backgroundSize: '22px 22px',
+              maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%)',
+            }}
           />
-          <div className="absolute inset-0 bg-black/45" />
+          <div
+            aria-hidden
+            className="absolute -top-1/2 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-white/10 blur-3xl"
+          />
 
-          <div ref={innerRef} className="relative z-[1] py-20 px-8 max-[479px]:px-5">
-            <div className="flex flex-col items-center text-center gap-4 max-w-[880px] mx-auto">
-              <h2
-                className={`m-0 text-white font-medium leading-[1.05] text-[clamp(2.2rem,5vw,4.4rem)] tracking-[-0.03em] transition-all duration-700 ease-out ${
-                  visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={enter(0)}
-              >
-                Przestań tracić klientów,
-                <br />
-                których już masz na linii.
-              </h2>
-              <p
-                className={`m-0 text-white/88 text-[clamp(1.05rem,1.6vw,1.3rem)] leading-relaxed max-w-[560px] transition-all duration-700 ease-out ${
-                  visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={enter(120)}
-              >
-                Napisz do nas — odpowiemy tego samego dnia i umówimy krótką, bezpłatną rozmowę
-                o Twojej firmie.
-              </p>
+          <FloatCard className="left-6 top-12 -rotate-[4deg]">
+            <div className="flex items-center gap-2 text-[13px] font-medium mb-2">
+              <PhoneIncoming size={14} strokeWidth={2} className="text-blu" />
+              Połączenie odebrane
+            </div>
+            <div className="flex items-center gap-[3px] h-6">
+              {[0.5, 0.9, 0.6, 1, 0.7, 0.95, 0.45, 0.8, 0.6, 1, 0.5, 0.85].map((h, i) => (
+                <span key={i} className="w-[3px] rounded-full bg-blu" style={{ height: `${h * 100}%` }} />
+              ))}
+            </div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink/48 mt-2">Niedziela · 21:15</div>
+          </FloatCard>
 
-              {/* Frosted-glass pasek CTA (Babka) */}
-              <div
-                className={`flex flex-row justify-between items-center w-full gap-6 mt-16 max-[767px]:mt-10 backdrop-blur-[16px] bg-white/12 border border-white/18 rounded-full py-3 pl-8 pr-3 max-[767px]:flex-col max-[767px]:items-stretch max-[767px]:rounded-[20px] max-[767px]:p-4 max-[767px]:gap-4 transition-all duration-700 ease-out ${
-                  visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-                style={enter(240)}
+          <FloatCard className="right-6 bottom-12 rotate-[3deg] [animation-delay:1.2s]">
+            <div className="flex items-center gap-2 text-[13px] font-medium mb-1.5">
+              <CalendarCheck size={14} strokeWidth={2} className="text-blu" />
+              Wizyta zapisana
+            </div>
+            <div className="text-[13px] text-ink/64">Strzyżenie · jutro 17:00</div>
+            <span className="inline-block mt-2.5 rounded-full bg-grn-tint px-2 py-[3px] font-mono text-[10px] font-medium uppercase tracking-[0.06em] text-[#1d5c0c]">
+              ✓ W kalendarzu
+            </span>
+          </FloatCard>
+
+          <div className="relative max-w-[640px] mx-auto">
+            <h2
+              id="cta-title"
+              className="font-medium text-[clamp(2.2rem,4.6vw,3.5rem)] leading-[1.04] tracking-[-0.04em] text-balance"
+            >
+              Przestań tracić klientów, których już masz na linii.
+            </h2>
+            <p className="text-white/80 text-[clamp(1.05rem,1.5vw,1.2rem)] leading-relaxed mt-6 max-w-[540px] mx-auto">
+              Napisz do nas — odpowiemy tego samego dnia i umówimy krótką, bezpłatną rozmowę o Twojej firmie.
+            </p>
+            <div className="flex items-center justify-center gap-3 flex-wrap mt-10">
+              <PillButton
+                href="mailto:kontakt@receply.com?subject=Receply%20—%20bezpłatna%20rozmowa"
+                variant="light"
+                className="px-7 py-3.5"
               >
-                <img
-                  src="/logo-white.svg"
-                  alt="Receply"
-                  className="h-6 w-auto max-[767px]:h-5 max-[767px]:mx-auto"
-                />
-                <div className="flex flex-row flex-wrap items-center gap-4 max-[767px]:flex-col max-[767px]:items-stretch">
-                  <div className="text-white/72 text-[15px] max-[767px]:text-center">
-                    kontakt@receply.com · bez zobowiązań
-                  </div>
-                  <a
-                    href="mailto:kontakt@receply.com?subject=Receply%20—%20bezpłatna%20rozmowa"
-                    onMouseEnter={() => setBtnHovered(true)}
-                    onMouseLeave={() => setBtnHovered(false)}
-                    className={`inline-flex justify-center items-center gap-2 font-medium text-[15px] text-white no-underline rounded-full px-7 py-3.5 transition-colors duration-300 ${
-                      btnHovered ? 'bg-black' : 'bg-blu'
-                    }`}
-                  >
-                    Umów bezpłatną rozmowę
-                  </a>
-                </div>
-              </div>
+                Umów bezpłatną rozmowę
+              </PillButton>
+              <PillButton
+                href="#rozmowa"
+                variant="ghost-light"
+                arrow={false}
+                onClick={() => window.dispatchEvent(new Event(PLAY_CALL_EVENT))}
+                className="px-7 py-3.5"
+              >
+                <Play size={14} fill="currentColor" strokeWidth={0} aria-hidden />
+                Posłuchaj rozmowy
+              </PillButton>
+            </div>
+            <div className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-white/56 mt-8">
+              kontakt@receply.com · bez zobowiązań
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </Reveal>
+    </Section>
   );
 }

@@ -1,12 +1,13 @@
 // Nawigacja: pływający pasek-pigułka z blur (wzorzec BYQ Truebase Navigation Bar 1),
 // zaadaptowany: logo rec[ply], linki sekcji, CTA jako czarna pigułka Nextwell.
 import * as React from 'react';
+import { Menu, X } from 'lucide-react';
 
 const LINKS = [
   { href: '#problem', label: 'Problem' },
-  { href: '#demo', label: 'Jak wygląda' },
+  { href: '#demo', label: 'Posłuchaj' },
   { href: '#funkcje', label: 'Funkcje' },
-  { href: '#kalkulator', label: 'Kalkulator' },
+  { href: '#dla-kogo', label: 'Dla kogo' },
   { href: '#cennik', label: 'Cennik' },
   { href: '#faq', label: 'FAQ' },
 ];
@@ -44,11 +45,12 @@ export function Navbar() {
             <span className="hidden max-[900px]:inline">Umów rozmowę</span>
           </a>
           <button
-            aria-label="Menu"
+            aria-label={open ? 'Zamknij menu' : 'Menu'}
+            aria-expanded={open}
             onClick={() => setOpen(!open)}
             className="hidden max-[900px]:flex items-center justify-center w-10 h-10 rounded-full border border-ink/16 text-ink bg-transparent cursor-pointer"
           >
-            ☰
+            {open ? <X size={18} strokeWidth={1.75} aria-hidden /> : <Menu size={18} strokeWidth={1.75} aria-hidden />}
           </button>
         </div>
       </nav>
