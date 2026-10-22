@@ -49,6 +49,7 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta property="og:s
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${cssHref}">
 <script defer data-domain="receply.com" src="https://plausible.io/js/script.js"></script>
+<script>window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="mailto:"]');if(a)plausible('Kontakt e-mail')});</script>
 ${extra}
 </head>`;
 }
