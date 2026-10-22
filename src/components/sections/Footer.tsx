@@ -7,6 +7,7 @@ const NAV = [
   { href: '#dla-kogo', label: 'Dla kogo' },
   { href: '#cennik', label: 'Cennik' },
   { href: '#faq', label: 'FAQ' },
+  { href: '/blog/', label: 'Blog' },
 ];
 
 export function Footer() {
