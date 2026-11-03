@@ -7,7 +7,7 @@
 title: "Polityka prywatności"
 seo_title: "Polityka prywatności | Receply"
 description: "Jakie dane przetwarza Receply, w jakim celu, komu je powierza i jakie masz prawa. Dotyczy strony receply.pl, formularza kontaktowego i usługi."
-updated: "2026-11-03"
+updated: "2026-11-04"
 draft: "true"
 ---
 
@@ -35,6 +35,8 @@ Administratorem danych jest [NAZWA FIRMY], [ADRES], NIP [NIP] („Receply”, �
 
 Rozmowy klientów firm przechowujemy domyślnie przez 12 miesięcy od ostatniej wiadomości, chyba że firma ustali z nami inny okres.
 
+Gdy Receply odbiera telefon, przetwarzamy numer dzwoniącego, głos w trakcie rozmowy i jej zapis tekstowy, a jeśli firma włączy nagrywanie, także nagranie rozmowy. Nagrania przechowujemy przez [DO POTWIERDZENIA: 30 dni]. O asystencie AI i o nagrywaniu Receply informuje na początku połączenia [DO POTWIERDZENIA: treść komunikatu i podstawa prawna, do sprawdzenia przez prawnika].
+
 Podanie danych jest dobrowolne, ale bez nich nie odpowiemy na zapytanie ani nie założymy konta.
 
 ## Komu powierzamy dane
@@ -47,7 +49,12 @@ Nie sprzedajemy danych. Korzystamy z dostawców, którzy pomagają nam prowadzi�
 - **Supabase**: baza danych na serwerach w UE,
 - **Anthropic** (USA): model AI prowadzący rozmowy [DO POTWIERDZENIA: region przetwarzania, zob. obietnicę „dane w UE” na stronie],
 - **SMSAPI** (Polska): SMS-y z przypomnieniami o wizytach,
-- **Meta Platforms Ireland**: wiadomości na Instagramie.
+- **Meta Platforms Ireland**: wiadomości na Instagramie,
+- **LiveKit** (USA): obsługa połączeń głosowych [DO POTWIERDZENIA: serwery w UE i umowa powierzenia],
+- **Zadarma**: numery telefonów i połączenia [DO POTWIERDZENIA: siedziba i miejsce przetwarzania],
+- **Deepgram** (USA): zamiana mowy na tekst [DO POTWIERDZENIA: region przetwarzania],
+- **Cartesia** (USA): zamiana tekstu na mowę [DO POTWIERDZENIA: region przetwarzania],
+- **Amazon Web Services** (Amazon Bedrock): model AI w rozmowach telefonicznych [DO POTWIERDZENIA: region UE].
 
 Dane mogą też otrzymać organy publiczne, gdy wymaga tego prawo.
 
@@ -57,7 +64,7 @@ Część dostawców ma siedzibę w USA. Dane trafiają tam na podstawie standard
 
 ## Automatyczne odpowiedzi
 
-Receply odpowiada klientom firm automatycznie, z pomocą modelu AI. Zapytane wprost, przyznaje, że jest asystentem. Nie podejmuje decyzji wywołujących skutki prawne, a nietypowe sprawy przekazuje człowiekowi.
+Receply odpowiada klientom firm automatycznie, z pomocą modelu AI, i na początku rozmowy informuje, że jest asystentem AI. Nie podejmuje decyzji wywołujących skutki prawne, a nietypowe sprawy przekazuje człowiekowi.
 
 ## Twoje prawa
 

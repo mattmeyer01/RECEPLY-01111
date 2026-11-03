@@ -9,7 +9,7 @@ import { Card, PillButton, Reveal, Section, SectionHeading } from '@/lib/ui';
 export const FAQS = [
   {
     q: 'Czy klienci zorientują się, że rozmawiają z AI?',
-    a: 'Receply mówi naturalnym głosem i prowadzi płynną rozmowę po polsku, więc rozmowa brzmi jak z dobrą recepcją. Nie ukrywamy jednak, że to asystent — jeśli klient zapyta wprost, Receply odpowiada szczerze. W praktyce klientom zależy na jednym: szybko załatwić sprawę i dostać termin. To dostają.',
+    a: 'Tak, i to od razu: Receply na początku rozmowy mówi, że jest asystentem AI, bo tak wymaga prawo (AI Act). Potem prowadzi płynną rozmowę po polsku, jak dobra recepcja. W praktyce klientom zależy na jednym: szybko załatwić sprawę i dostać termin. To dostają.',
   },
   {
     q: 'Co z danymi moich klientów i RODO?',
