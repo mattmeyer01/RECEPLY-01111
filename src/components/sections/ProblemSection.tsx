@@ -1,6 +1,6 @@
 // Problem: ból pokazany w języku produktu — po lewej „centrum powiadomień"
 // z kontaktami, które jednego dnia zostały bez odpowiedzi, po prawej trzy
-// liczby z uczciwymi przypisami (bez zmyślonych statystyk).
+// proste obserwacje (bez statystyk, których nie umiemy potwierdzić).
 import { PhoneMissed } from 'lucide-react';
 import { InstagramIcon } from '@/components/icons';
 import { Card, Chip, Reveal, Section, SectionHeading } from '@/lib/ui';
@@ -15,22 +15,19 @@ const MISSED: { kind: 'call' | 'dm'; who: string; what: string; time: string }[]
 
 const STATS = [
   {
-    value: '60%+',
-    title: 'klientów nie próbuje drugi raz',
-    desc: 'Gdy nikt nie odbiera, większość dzwoniących wybiera następny numer z Google — czyli Twoją konkurencję.',
-    note: 'Wartość powszechnie cytowana w branży, nie oficjalna statystyka.',
+    value: '1×',
+    title: 'zwykle tyle dzwoni klient',
+    desc: 'Gdy nikt nie odbiera, wybiera następny numer z Google — czyli Twoją konkurencję.',
   },
   {
     value: '24/7',
-    title: 'tyle dziś oczekują klienci',
+    title: 'wtedy piszą i dzwonią klienci',
     desc: 'Ludzie piszą i dzwonią wieczorami, w weekendy i w święta. Kto odpowiada pierwszy, ten dostaje rezerwację.',
-    note: 'Obserwacja z rynku usług lokalnych, nie zweryfikowane badanie.',
   },
   {
     value: '0',
     title: 'osób na etacie do telefonu i DM-ów',
     desc: 'W małej firmie nikt nie siedzi przy słuchawce. Odbierasz między klientami — albo wcale. Recepcjonistka na etat to kilka tysięcy złotych miesięcznie.',
-    note: null,
   },
 ];
 
@@ -102,7 +99,6 @@ export function ProblemSection() {
                 <div>
                   <h3 className="text-lg font-medium mb-1.5">{s.title}</h3>
                   <p className="text-[15px] text-ink/64 leading-relaxed">{s.desc}</p>
-                  {s.note && <p className="text-xs text-ink/40 mt-3">* {s.note}</p>}
                 </div>
               </div>
             </Reveal>

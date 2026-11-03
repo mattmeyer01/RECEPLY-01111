@@ -131,7 +131,7 @@ export function ProcessSection() {
         eyebrow="Wdrożenie"
         title="Startujesz w kilka dni, nie miesięcy."
         muted="Z Twojej strony to 1–2 godziny."
-        sub="Nie musisz niczego ustawiać sam. Prowadzimy Cię za rękę — od pierwszej rozmowy po pierwszy odebrany telefon."
+        sub="Nie musisz niczego ustawiać samodzielnie. Prowadzimy Cię za rękę — od pierwszej rozmowy po pierwszy odebrany telefon."
       />
 
       <div className="grid grid-cols-3 gap-4 mt-14 max-[767px]:mt-10 max-[991px]:grid-cols-1">

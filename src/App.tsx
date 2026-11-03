@@ -2,7 +2,7 @@
 // Gallery 4) zostaje bez zmian; wszystko poniżej to jeden system sekcji
 // z src/lib/ui.tsx — wspólna ramka z liniami włoskowymi, mono etykiety
 // i białe karty-widgety z makietami produktu w języku pływających kart z hero.
-// Kolejność: problem → koszt → dowód (nagranie) → funkcje → branże →
+// Kolejność: problem → koszt → dowód (nagranie) → funkcje → panel → branże →
 // wdrożenie → oferta → obiekcje → CTA.
 import { Navbar } from '@/components/sections/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
@@ -11,6 +11,7 @@ import { ProblemSection } from '@/components/sections/ProblemSection';
 import { CalculatorSection } from '@/components/sections/CalculatorSection';
 import { DemoSection } from '@/components/sections/DemoSection';
 import { FeaturesSection } from '@/components/sections/FeaturesSection';
+import { PanelSection } from '@/components/sections/PanelSection';
 import { IndustriesSection } from '@/components/sections/IndustriesSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { PricingSection } from '@/components/sections/PricingSection';
@@ -29,6 +30,7 @@ export function App() {
         <CalculatorSection />
         <DemoSection />
         <FeaturesSection />
+        <PanelSection />
         <IndustriesSection />
         <ProcessSection />
         <PricingSection />

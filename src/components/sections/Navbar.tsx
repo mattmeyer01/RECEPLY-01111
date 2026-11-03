@@ -2,6 +2,7 @@
 // zaadaptowany: logo rec[ply], linki sekcji, CTA jako czarna pigułka Nextwell.
 import * as React from 'react';
 import { Menu, X } from 'lucide-react';
+import { APP_URL } from '@/lib/site';
 
 const LINKS = [
   { href: '#problem', label: 'Problem' },
@@ -36,6 +37,12 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
+          <a
+            href={APP_URL}
+            className="text-sm text-ink/64 hover:text-ink transition-colors no-underline hidden min-[1080px]:inline"
+          >
+            Zaloguj się
+          </a>
           {/* Wzorzec YC (Stripe/Linear/Arini): CTA w navbarze zostaje zawsze,
               na mobile tylko krótsza etykieta i mniejszy rozmiar. */}
           <a
@@ -69,6 +76,9 @@ export function Navbar() {
                 {l.label}
               </a>
             ))}
+            <a href={APP_URL} className="text-ink/88 no-underline text-[15px]">
+              Zaloguj się
+            </a>
           </div>
         </div>
       )}
