@@ -90,6 +90,7 @@ body {
   html { scroll-behavior: auto; }
   .wave-bar, .animate-floaty, .animate-fade-in, .animate-ping { animation: none; }
   .reveal, .reveal-blur { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .reveal-load { animation: none !important; }
 }
 
 /* Animacje wejścia (wzorzec BYQ: IntersectionObserver + fade-up / blur-in) */
@@ -110,4 +111,12 @@ body {
 .reveal-blur.visible {
   opacity: 1;
   filter: blur(0);
+}
+/* Pierwszy ekran: treść jest w HTML, więc animacja nie czeka na JavaScript. */
+@keyframes reveal-load {
+  from { opacity: 0; filter: blur(12px); }
+  to { opacity: 1; filter: blur(0); }
+}
+.reveal-load {
+  animation: reveal-load 0.7s ease-out both;
 }

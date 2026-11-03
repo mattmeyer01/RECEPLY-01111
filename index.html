@@ -3,18 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Receply — AI recepcjonista dla małych firm | receply.com</title>
+<title>Receply — AI recepcjonista dla małych firm</title>
 <meta name="description" content="Receply odbiera telefony i odpisuje na Instagramie, gdy Ty pracujesz. Umawia wizyty prosto do Twojego kalendarza. AI recepcjonista dla małych firm w Polsce.">
+<link rel="canonical" href="https://receply.pl/">
+<meta property="og:site_name" content="Receply">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Receply — AI recepcjonista dla małych firm">
+<meta property="og:description" content="Odbiera telefony i odpisuje na Instagramie, gdy Ty pracujesz. Umawia wizyty prosto do Twojego kalendarza.">
+<meta property="og:url" content="https://receply.pl/">
+<meta property="og:image" content="https://receply.pl/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Receply — AI recepcjonista dla małych firm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Receply — AI recepcjonista dla małych firm">
+<meta name="twitter:description" content="Odbiera telefony i odpisuje na Instagramie, gdy Ty pracujesz. Umawia wizyty prosto do Twojego kalendarza.">
+<meta name="twitter:image" content="https://receply.pl/og.jpg">
+<meta name="theme-color" content="#f5f4f1">
 <link rel="icon" type="image/svg+xml" href="/icon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="alternate" type="application/rss+xml" title="Blog Receply" href="https://receply.com/blog/rss.xml">
+<link rel="preload" href="/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/geist-latin-ext-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="alternate" type="application/rss+xml" title="Blog Receply" href="https://receply.pl/blog/rss.xml">
+<noscript><style>.reveal, .reveal-blur { opacity: 1 !important; transform: none !important; filter: none !important; }</style></noscript>
 <script defer data-domain="receply.com" src="https://plausible.io/js/script.js"></script>
 <script>window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="mailto:"]');if(a)plausible('Kontakt e-mail')});</script>
 </head>
 <body>
 <div id="root"></div>
+<!-- Dla Netlify Forms: wykrywa formularz w statycznym HTML. Właściwy formularz jest w React (ContactForm.tsx). -->
+<form name="rozmowa" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="imie">
+  <input type="text" name="firma">
+  <input type="text" name="kontakt">
+  <input type="text" name="bot-field">
+</form>
 <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

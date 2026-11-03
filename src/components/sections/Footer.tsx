@@ -1,5 +1,7 @@
 // Stopka w ramce strony: marka i kontakt, nawigacja po sekcjach, uczciwa
 // informacja o wczesnym etapie produktu i duży, wyblakły znak Receply.
+import { APP_URL, CONTACT_EMAIL, PRIVACY_URL } from '@/lib/site';
+
 const NAV = [
   { href: '#problem', label: 'Problem' },
   { href: '#demo', label: 'Posłuchaj' },
@@ -8,6 +10,7 @@ const NAV = [
   { href: '#cennik', label: 'Cennik' },
   { href: '#faq', label: 'FAQ' },
   { href: '/blog/', label: 'Blog' },
+  { href: APP_URL, label: 'Zaloguj się' },
 ];
 
 export function Footer() {
@@ -35,15 +38,25 @@ export function Footer() {
           </div>
           <div className="col-span-4 max-[767px]:col-span-1">
             <div className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-ink/40 mb-4">Kontakt</div>
-            <a href="mailto:kontakt@receply.com" className="text-[15px] text-ink no-underline hover:text-blu">
-              kontakt@receply.com
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-[15px] text-ink no-underline hover:text-blu">
+              {CONTACT_EMAIL}
             </a>
             <p className="text-[14px] text-ink/48 mt-2">Odpowiadamy tego samego dnia.</p>
           </div>
         </div>
 
         <div className="flex items-center justify-between gap-4 flex-wrap mt-14 pt-6 border-t border-ink/8 text-[13px] text-ink/48">
-          <span>© 2026 Receply · receply.com</span>
+          <span>
+            © 2026 Receply · receply.pl
+            {PRIVACY_URL && (
+              <>
+                {' · '}
+                <a href={PRIVACY_URL} className="underline underline-offset-2 hover:text-ink">
+                  Polityka prywatności
+                </a>
+              </>
+            )}
+          </span>
           <span>Produkt we wczesnym dostępie. Rozmowy i dane na tej stronie są przykładowe.</span>
         </div>
 

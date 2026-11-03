@@ -3,9 +3,10 @@
 // wdrożenie, rezygnacja, limit). Odpowiedzi tylko z faktów ze strony.
 import * as React from 'react';
 import { Mail, Plus } from 'lucide-react';
+import { CONTACT_EMAIL } from '@/lib/site';
 import { Card, PillButton, Reveal, Section, SectionHeading } from '@/lib/ui';
 
-const FAQS = [
+export const FAQS = [
   {
     q: 'Czy klienci zorientują się, że rozmawiają z AI?',
     a: 'Receply mówi naturalnym głosem i prowadzi płynną rozmowę po polsku, więc rozmowa brzmi jak z dobrą recepcją. Nie ukrywamy jednak, że to asystent — jeśli klient zapyta wprost, Receply odpowiada szczerze. W praktyce klientom zależy na jednym: szybko załatwić sprawę i dostać termin. To dostają.',
@@ -24,7 +25,7 @@ const FAQS = [
   },
   {
     q: 'Czy mogę zrezygnować w dowolnym momencie?',
-    a: 'Tak. Nie podpisujesz umowy długoterminowej — płacisz miesiąc do miesiąca i możesz zrezygnować w każdej chwili, bez okresu wypowiedzenia i bez kar umownych. Jeśli Receply nie zarabia na siebie, nie powinieneś za niego płacić.',
+    a: 'Tak. Nie podpisujesz umowy długoterminowej — płacisz miesiąc do miesiąca i możesz zrezygnować w każdej chwili, bez okresu wypowiedzenia i bez kar umownych. Jeśli Receply nie zarabia na siebie, nie ma sensu za niego płacić.',
   },
   {
     q: 'Co jeśli przekroczę limit rozmów w pakiecie?',
@@ -57,8 +58,8 @@ export function FaqSection() {
                     <div className="text-[13.5px] text-ink/64">Odpowiadamy tego samego dnia.</div>
                   </div>
                 </div>
-                <PillButton href="mailto:kontakt@receply.com" variant="ghost" className="mt-5 w-full">
-                  kontakt@receply.com
+                <PillButton href={`mailto:${CONTACT_EMAIL}`} variant="ghost" className="mt-5 w-full">
+                  {CONTACT_EMAIL}
                 </PillButton>
               </Card>
             </Reveal>

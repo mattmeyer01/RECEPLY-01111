@@ -1,5 +1,12 @@
 // Szablony HTML bloga — czysty HTML + jeden plik CSS, bez bundla Reacta.
-import { SITE } from './content.mjs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { CONTACT_EMAIL, loadLegal, SITE } from './content.mjs';
+
+// Linki do stron prawnych pojawiają się w stopce, gdy strona przestaje być szkicem.
+const LEGAL_LINKS = loadLegal(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..'))
+  .filter((p) => !p.draft)
+  .map((p) => [`/${p.slug}/`, p.title]);
 
 const MONTHS = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
 
@@ -13,7 +20,7 @@ export function plDate(iso) {
 
 const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
 
-const DEFAULT_IMAGE = `${SITE}/hero.jpg`;
+const DEFAULT_IMAGE = `${SITE}/og.jpg`;
 const PUBLISHER = {
   '@type': 'Organization',
   name: 'Receply',
@@ -44,9 +51,9 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta property="og:s
 <meta name="theme-color" content="#f5f4f1">
 <link rel="icon" type="image/svg+xml" href="/icon.svg">
 <link rel="alternate" type="application/rss+xml" title="Blog Receply" href="${SITE}/blog/rss.xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/geist-latin-ext-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="${cssHref}">
 <script defer data-domain="receply.com" src="https://plausible.io/js/script.js"></script>
 <script>window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="mailto:"]');if(a)plausible('Kontakt e-mail')});</script>
@@ -76,6 +83,7 @@ function footer(year) {
     ['/#cennik', 'Cennik'],
     ['/#faq', 'FAQ'],
     ['/blog/rss.xml', 'RSS'],
+    ...LEGAL_LINKS,
   ];
   return `<footer>
   <div class="frame">
@@ -90,12 +98,12 @@ function footer(year) {
       </div>
       <div>
         <div class="foot-label">Kontakt</div>
-        <a class="foot-mail" href="mailto:kontakt@receply.com">kontakt@receply.com</a>
+        <a class="foot-mail" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
         <p class="foot-note">Odpowiadamy tego samego dnia.</p>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© ${year} Receply · receply.com</span>
+      <span>© ${year} Receply · receply.pl</span>
       <span>Produkt we wczesnym dostępie.</span>
     </div>
   </div>
@@ -245,6 +253,30 @@ ${footer(today.slice(0, 4))}
 `;
 }
 
+export function renderLegal({ page, today, cssHref, noindex }) {
+  const canonical = `${SITE}/${page.slug}/`;
+  return `${head({ title: page.seoTitle, description: page.description, canonical, ogType: 'website', image: DEFAULT_IMAGE, cssHref, noindex })}
+<body>
+${nav('legal')}
+<main id="tresc">
+  <div class="frame">
+    <article>
+      <header class="article-head">
+        <h1>${esc(page.title)}</h1>
+        <div class="byline"><span>Ostatnia aktualizacja: ${plDate(page.updated)}</span></div>
+      </header>
+      <div class="prose">
+${page.html}
+      </div>
+    </article>
+  </div>
+</main>
+${footer(today.slice(0, 4))}
+</body>
+</html>
+`;
+}
+
 export function renderRss(posts) {
   const xml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const rfc822 = (iso) => new Date(`${iso}T08:00:00Z`).toUTCString();
@@ -273,11 +305,11 @@ ${posts.length ? `    <lastBuildDate>${rfc822(posts[0].date)}</lastBuildDate>\n`
 `;
 }
 
-export function renderSitemap(posts) {
+export function renderSitemap(posts, legal = []) {
   const url = (loc, lastmod) => `  <url><loc>${loc}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}</url>`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[url(`${SITE}/`), url(`${SITE}/blog/`, posts[0]?.date), ...posts.map((p) => url(`${SITE}/blog/${p.slug}/`, p.date))].join('\n')}
+${[url(`${SITE}/`), url(`${SITE}/blog/`, posts[0]?.date), ...posts.map((p) => url(`${SITE}/blog/${p.slug}/`, p.date)), ...legal.map((p) => url(`${SITE}/${p.slug}/`, p.updated))].join('\n')}
 </urlset>
 `;
 }

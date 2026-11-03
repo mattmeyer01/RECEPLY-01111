@@ -118,7 +118,7 @@ export function HeroSection() {
       }}
     >
       {/* Pływające karty UI (Evermind: scattered collage, blur-in z opóźnieniem) */}
-      <Reveal blur delay={200} className="absolute inset-0 pointer-events-none">
+      <Reveal onLoad delay={200} className="absolute inset-0 pointer-events-none">
         <WidgetShell title="Połączenie przychodzące" icon={PhoneIcon} depth={0.9} floatDelay={0.4}
           className="top-[14%] left-[6%] w-[240px]">
           <div className="text-xs text-ink/64 mb-2">Salon Beauty · dziś 18:42</div>
@@ -161,12 +161,12 @@ export function HeroSection() {
 
       {/* Centralny blok nagłówka (Evermind: blur-in) */}
       <div className="relative z-10 max-w-[880px] mx-auto px-5 text-center">
-        <Reveal blur>
+        <Reveal onLoad>
           <div className="mb-6">
             <Eyebrow>AI recepcjonista · Telefon + Instagram</Eyebrow>
           </div>
           <h1 className="font-medium text-[clamp(2.4rem,5.2vw,4.25rem)] leading-[1.06] tracking-[-0.03em] max-w-[760px] mx-auto">
-            Ani jeden klient nie ucieka, bo nie zdążyłeś odebrać telefonu
+            Ani jeden klient nie ucieka, gdy nie możesz odebrać telefonu
           </h1>
           <p className="text-ink/64 text-[clamp(1.05rem,1.5vw,1.25rem)] leading-relaxed max-w-[560px] mx-auto mt-6">
             Receply odbiera połączenia i odpisuje na Instagramie, gdy Ty pracujesz. Umawia wizyty
@@ -174,7 +174,7 @@ export function HeroSection() {
           </p>
         </Reveal>
 
-        <Reveal delay={150}>
+        <Reveal onLoad delay={150}>
           <div className="flex items-center justify-center gap-3 flex-wrap mt-10">
             <a
               href="#cta"

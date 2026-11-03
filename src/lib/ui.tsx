@@ -9,11 +9,14 @@ import * as React from 'react';
 
 export function Reveal({
   blur = false,
+  onLoad = false,
   delay = 0,
   className = '',
   children,
 }: {
   blur?: boolean;
+  /** Pierwszy ekran: animacja startuje z załadowaniem CSS, bez czekania na JavaScript. */
+  onLoad?: boolean;
   delay?: number;
   className?: string;
   children: React.ReactNode;
@@ -23,7 +26,7 @@ export function Reveal({
 
   React.useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || onLoad) return;
     const obs = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -35,7 +38,15 @@ export function Reveal({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [onLoad]);
+
+  if (onLoad) {
+    return (
+      <div className={`reveal-load ${className}`} style={delay ? { animationDelay: `${delay}ms` } : undefined}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -74,6 +85,7 @@ export function PillButton({
   children,
   variant = 'dark',
   arrow = true,
+  external = false,
   onClick,
   className = '',
 }: {
@@ -81,6 +93,8 @@ export function PillButton({
   children: React.ReactNode;
   variant?: 'dark' | 'blue' | 'light' | 'ghost' | 'ghost-light';
   arrow?: boolean;
+  /** Otwiera w nowej karcie, żeby strona została pod ręką. */
+  external?: boolean;
   onClick?: () => void;
   className?: string;
 }) {
@@ -95,6 +109,7 @@ export function PillButton({
     <a
       href={href}
       onClick={onClick}
+      {...(external ? { target: '_blank', rel: 'noopener' } : {})}
       className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium text-[15px] no-underline transition-colors duration-300 ${styles[variant]} ${className}`}
     >
       {arrow && <Arrow />}

@@ -3,6 +3,7 @@
 // i pocztą głosową, pod spodem warunki wczesnego dostępu — dawna osobna
 // sekcja bento połączona z cennikiem, żeby oferta była w jednym miejscu.
 import { Check, DoorOpen, Handshake, Lock, MessagesSquare, Minus, X } from 'lucide-react';
+import { CONTACT_EMAIL } from '@/lib/site';
 import { Chip, PillButton, Reveal, Section, SectionHeading } from '@/lib/ui';
 
 const START_FEATURES = [
@@ -175,8 +176,8 @@ export function PricingSection() {
             <span className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-cream/64">
               Wczesny dostęp · warunki dla pierwszych 20 firm
             </span>
-            <a href="mailto:kontakt@receply.com?subject=Receply%20—%20wczesny%20dostęp" className="text-[14px] text-cream/72 hover:text-cream">
-              Pytania? kontakt@receply.com
+            <a href={`mailto:${CONTACT_EMAIL}?subject=Receply%20—%20wczesny%20dostęp`} className="text-[14px] text-cream/72 hover:text-cream">
+              Pytania? {CONTACT_EMAIL}
             </a>
           </div>
           <div className="grid grid-cols-4 max-[991px]:grid-cols-2 max-[480px]:grid-cols-1">

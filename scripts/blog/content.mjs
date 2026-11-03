@@ -5,7 +5,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { Marked } from 'marked';
 
-export const SITE = 'https://receply.com';
+export const SITE = 'https://receply.pl';
+export const CONTACT_EMAIL = 'kontakt@receply.pl';
 export const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 export const REQUIRED = ['title', 'seo_title', 'description', 'date', 'author', 'minutes'];
 export const OPTIONAL = ['image'];
@@ -288,4 +289,31 @@ export function loadPosts(root) {
 
   posts.sort((a, b) => (a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? 1 : -1));
   return { posts, errors, warnings };
+}
+
+/**
+ * Strony prawne z content/legal/*.md: frontmatter title, seo_title, description, updated.
+ * draft: "true" = szkic, poza produkcją (w podglądzie wdrożenia z noindex).
+ */
+export function loadLegal(root) {
+  const dir = path.join(root, 'content/legal');
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => {
+      const fm = parseFrontmatter(fs.readFileSync(path.join(dir, f), 'utf8'));
+      const missing = ['title', 'seo_title', 'description', 'updated'].filter((k) => !fm.data?.[k]);
+      if (fm.error || fm.errors?.length || missing.length) {
+        throw new Error(`content/legal/${f}: ${fm.error ?? [...fm.errors, ...missing.map((k) => `brak pola "${k}"`)].join('; ')}`);
+      }
+      return {
+        slug: f.replace(/\.md$/, ''),
+        title: fm.data.title,
+        seoTitle: fm.data.seo_title,
+        description: fm.data.description,
+        updated: fm.data.updated,
+        draft: fm.data.draft === 'true',
+        html: renderMarkdown(fm.body).html,
+      };
+    });
 }

@@ -13,8 +13,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { loadPosts, today as getToday, landingAnchors, SITE } from './blog/content.mjs';
-import { renderIndex, renderPost, renderRss, renderSitemap } from './blog/templates.mjs';
+import { loadLegal, loadPosts, today as getToday, landingAnchors, SITE } from './blog/content.mjs';
+import { renderIndex, renderLegal, renderPost, renderRss, renderSitemap } from './blog/templates.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
@@ -71,9 +71,18 @@ for (const post of visible) {
   fs.writeFileSync(path.join(dir, 'index.html'), renderPost({ post, related, today, cssHref, noindex: post.date > today }));
 }
 
-// RSS i sitemap tylko z opublikowanych wpisów (także w deploy preview).
+// Strony prawne: szkice tylko w podglądzie wdrożenia, z noindex.
+const legal = loadLegal(ROOT);
+for (const page of legal) {
+  if (page.draft && !PREVIEW) continue;
+  const dir = path.join(DIST, page.slug);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), renderLegal({ page, today, cssHref, noindex: page.draft }));
+}
+
+// RSS i sitemap tylko z opublikowanych treści (także w deploy preview).
 fs.writeFileSync(path.join(blogDir, 'rss.xml'), renderRss(published));
-fs.writeFileSync(path.join(DIST, 'sitemap.xml'), renderSitemap(published));
+fs.writeFileSync(path.join(DIST, 'sitemap.xml'), renderSitemap(published, legal.filter((p) => !p.draft)));
 
 const robotsPath = path.join(DIST, 'robots.txt');
 let robots = fs.existsSync(robotsPath) ? fs.readFileSync(robotsPath, 'utf8') : 'User-agent: *\nAllow: /\n';

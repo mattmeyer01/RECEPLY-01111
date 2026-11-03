@@ -2,6 +2,13 @@
   command = "npm run build"
   publish = "dist"
 
+# Główna domena to receply.pl. Podglądy wdrożeń mają inne adresy, więc ich to nie dotyczy.
+[[redirects]]
+  from = "https://receply-demo.netlify.app/*"
+  to = "https://receply.pl/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -12,3 +19,8 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

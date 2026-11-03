@@ -5,7 +5,7 @@ generuje `scripts/build-blog.mjs` (uruchamiany w `npm run build` po `vite build`
 jako statyczny HTML: `dist/blog/`, `dist/blog/<slug>/`, `dist/blog/rss.xml`,
 `dist/sitemap.xml` i linia `Sitemap:` w `dist/robots.txt`.
 
-Adresy: lista `https://receply.com/blog/`, wpis `https://receply.com/blog/<slug>/`.
+Adresy: lista `https://receply.pl/blog/`, wpis `https://receply.pl/blog/<slug>/`.
 
 ## Plik
 

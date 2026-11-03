@@ -1,10 +1,12 @@
 // Finalne CTA: niebieska karta (kolor głównego przycisku z hero) z siatką
 // kropek i dwiema pływającymi kartami-widgetami jak w hero — domknięcie
-// strony tym samym językiem, którym się zaczyna. Dwa wyjścia: rozmowa
-// z zespołem albo odsłuchanie przykładowej rozmowy.
+// strony tym samym językiem, którym się zaczyna. Dwa wyjścia: formularz
+// zgłoszenia albo odsłuchanie przykładowej rozmowy.
 import * as React from 'react';
 import { CalendarCheck, PhoneIncoming, Play } from 'lucide-react';
+import { ContactForm } from '@/components/sections/ContactForm';
 import { PLAY_CALL_EVENT } from '@/components/sections/DemoSection';
+import { CONTACT_EMAIL } from '@/lib/site';
 import { PillButton, Reveal, Section } from '@/lib/ui';
 
 function FloatCard({ className, children }: { className: string; children: React.ReactNode }) {
@@ -70,16 +72,12 @@ export function FinalCtaSection() {
               Przestań tracić klientów, których już masz na linii.
             </h2>
             <p className="text-white/80 text-[clamp(1.05rem,1.5vw,1.2rem)] leading-relaxed mt-6 max-w-[540px] mx-auto">
-              Napisz do nas — odpowiemy tego samego dnia i umówimy krótką, bezpłatną rozmowę o Twojej firmie.
+              Zostaw kontakt — odezwiemy się tego samego dnia i umówimy krótką, bezpłatną rozmowę o Twojej firmie.
             </p>
-            <div className="flex items-center justify-center gap-3 flex-wrap mt-10">
-              <PillButton
-                href="mailto:kontakt@receply.com?subject=Receply%20—%20bezpłatna%20rozmowa"
-                variant="light"
-                className="px-7 py-3.5"
-              >
-                Umów bezpłatną rozmowę
-              </PillButton>
+            <div className="mt-10 max-w-[460px] mx-auto">
+              <ContactForm />
+            </div>
+            <div className="flex items-center justify-center mt-6">
               <PillButton
                 href="#rozmowa"
                 variant="ghost-light"
@@ -91,9 +89,12 @@ export function FinalCtaSection() {
                 Posłuchaj rozmowy
               </PillButton>
             </div>
-            <div className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-white/56 mt-8">
-              kontakt@receply.com · bez zobowiązań
-            </div>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-block font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-white/56 hover:text-white no-underline mt-8"
+            >
+              {CONTACT_EMAIL} · bez zobowiązań
+            </a>
           </div>
         </div>
       </Reveal>
