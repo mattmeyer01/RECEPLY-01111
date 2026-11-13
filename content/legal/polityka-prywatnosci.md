@@ -92,7 +92,7 @@ Nie sprzedajemy danych osobowych. Korzystamy z dostawców, którzy pomagają nam
 
 | Dostawca | Do czego | Siedziba |
 |---|---|---|
-| Supabase | baza danych, logowanie do panelu i funkcje serwerowe; serwery w UE (Frankfurt) | USA |
+| Supabase | baza danych, logowanie do panelu i funkcje serwerowe; serwery w UE (Irlandia) | USA |
 | Anthropic | model AI, który przygotowuje odpowiedzi asystenta i podsumowania rozmów | USA |
 | Meta Platforms Ireland | Instagram: odbieranie i wysyłanie wiadomości | Irlandia |
 | SMSAPI | przypomnienia SMS o wizytach i odbiór odpowiedzi | Polska |
@@ -107,7 +107,7 @@ Dane mogą też otrzymać podmioty, które świadczą nam usługi księgowe i pr
 
 ## Przekazywanie danych poza Europejski Obszar Gospodarczy
 
-Bazę danych Receply, a w niej rozmowy, wizyty i dane kontaktowe, prowadzimy w Unii Europejskiej, na serwerach Supabase we Frankfurcie. Część dostawców ma jednak siedzibę w USA albo może przetwarzać dane także poza Europejskim Obszarem Gospodarczym (Anthropic, Supabase, Netlify, Google). Dotyczy to zwłaszcza odpowiedzi asystenta: żeby je przygotować, przesyłamy treść rozmowy do modelu AI firmy Anthropic, który działa w USA. Zgodnie z warunkami, na jakich korzystamy z usług Anthropic, przesyłane treści nie służą do trenowania modeli AI.
+Bazę danych Receply, a w niej rozmowy, wizyty i dane kontaktowe, prowadzimy w Unii Europejskiej, na serwerach Supabase w Irlandii. Część dostawców ma jednak siedzibę w USA albo może przetwarzać dane także poza Europejskim Obszarem Gospodarczym (Anthropic, Supabase, Netlify, Google). Dotyczy to zwłaszcza odpowiedzi asystenta: żeby je przygotować, przesyłamy treść rozmowy do modelu AI firmy Anthropic, który działa w USA. Zgodnie z warunkami, na jakich korzystamy z usług Anthropic, przesyłane treści nie służą do trenowania modeli AI.
 
 Takie przekazania zabezpiecza decyzja Komisji Europejskiej stwierdzająca odpowiedni stopień ochrony (EU-U.S. Data Privacy Framework), gdy dostawca jest nią objęty, a w pozostałych przypadkach standardowe klauzule umowne przyjęte przez Komisję Europejską (art. 46 ust. 2 lit. c RODO). Kopię tych zabezpieczeń możesz otrzymać, pisząc na [kontakt@receply.pl](mailto:kontakt@receply.pl).
 

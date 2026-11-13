@@ -13,7 +13,7 @@ export const FAQS = [
   },
   {
     q: 'Co z danymi moich klientów i RODO?',
-    a: 'Dane Twoje i Twoich klientów są przetwarzane w UE, szyfrowane i nie są nikomu odsprzedawane. Umowa powierzenia przetwarzania danych jest w standardzie.',
+    a: 'Dane Twoje i Twoich klientów przechowujemy w szyfrowanej bazie w UE (Irlandia) i nikomu ich nie odsprzedajemy. Odpowiedzi pisze model AI firmy Anthropic z USA, więc trafia do niego treść rozmów. Umowa powierzenia przetwarzania danych jest w standardzie.',
   },
   {
     q: 'Co, jeśli Receply nie zna odpowiedzi?',
