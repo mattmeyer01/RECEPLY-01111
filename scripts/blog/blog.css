@@ -161,6 +161,28 @@ main { padding-top: 24px; }
 .prose th { font-family: var(--mono); font-size: 0.78em; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-64); background: var(--cream); white-space: nowrap; }
 .prose tr:last-child td { border-bottom: 0; }
 
+/* Potwierdzenie żądania usunięcia danych (/usuwanie-danych?kod=…) — biała karta jak widgety landingu */
+.notice {
+  max-width: 68ch; margin: 0 0 48px; padding: 28px 32px;
+  border: 1px solid var(--line); border-radius: 24px; background: #fff;
+  box-shadow: 0 8px 32px rgba(17, 17, 16, 0.06);
+  font-size: 16px; line-height: 1.65; color: var(--ink-72);
+}
+.notice[hidden] { display: none; }
+.notice-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-64);
+}
+.notice-label::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--grn); box-shadow: 0 0 0 4px rgba(123, 229, 84, 0.22); }
+.notice p { margin: 12px 0 0; }
+.notice .notice-title { margin-top: 14px; font-size: 22px; line-height: 1.25; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+.notice-code { font-size: 14px; color: var(--ink-64); }
+/* Kod w całości przechodzi do nowej linii; łamie się w środku tylko na bardzo wąskim ekranie. */
+.notice code { display: inline-block; max-width: 100%; vertical-align: top; font-family: var(--mono); font-size: 13px; color: var(--ink); background: var(--lift); padding: 2px 8px; border-radius: 6px; overflow-wrap: anywhere; }
+.notice .notice-note { font-size: 14px; color: var(--ink-48); }
+.notice a { color: var(--blu); text-underline-offset: 3px; }
+
 /* CTA — niebieska karta jak w FinalCtaSection */
 .cta {
   position: relative; overflow: hidden; margin: 56px 0 0;
@@ -194,7 +216,10 @@ footer { margin-top: 96px; border-top: 1px solid var(--line); }
 .foot ul a:hover, .foot-mail:hover { color: var(--blu); }
 .foot-mail { color: var(--ink); }
 .foot-note { margin: 8px 0 0; font-size: 14px; color: var(--ink-48); }
+.foot-company { margin: 24px 0 0; font-style: normal; font-size: 13px; line-height: 1.6; color: var(--ink-48); }
 .foot-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 56px; padding: 24px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-48); }
+.foot-bottom a { text-underline-offset: 2px; }
+.foot-bottom a:hover { color: var(--ink); }
 
 @media (max-width: 767px) {
   .hero { padding: 56px 0 40px; }
@@ -205,6 +230,7 @@ footer { margin-top: 96px; border-top: 1px solid var(--line); }
   .prose { font-size: 17px; }
   .cta { padding: 48px 22px; border-radius: 24px; }
   .empty { padding: 56px 22px; border-radius: 24px; }
+  .notice { padding: 22px 20px; border-radius: 20px; }
   .foot { grid-template-columns: 1fr; gap: 36px; padding-top: 48px; }
 }
 @media (max-width: 600px) {

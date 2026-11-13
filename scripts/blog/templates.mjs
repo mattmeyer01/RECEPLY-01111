@@ -1,9 +1,9 @@
 // Szablony HTML bloga — czysty HTML + jeden plik CSS, bez bundla Reacta.
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CONTACT_EMAIL, loadLegal, SITE } from './content.mjs';
+import { COMPANY, CONTACT_EMAIL, loadLegal, SITE } from './content.mjs';
 
-// Linki do stron prawnych pojawiają się w stopce, gdy strona przestaje być szkicem.
+// Linki do stron prawnych pojawiają się w stopce (jak na landingu: przy ©), gdy strona przestaje być szkicem.
 const LEGAL_LINKS = loadLegal(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..'))
   .filter((p) => !p.draft)
   .map((p) => [`/${p.slug}/`, p.title]);
@@ -83,8 +83,8 @@ function footer(year) {
     ['/#cennik', 'Cennik'],
     ['/#faq', 'FAQ'],
     ['/blog/rss.xml', 'RSS'],
-    ...LEGAL_LINKS,
   ];
+  const legal = LEGAL_LINKS.map(([h, l]) => ` · <a href="${h}">${l}</a>`).join('');
   return `<footer>
   <div class="frame">
     <div class="foot">
@@ -100,10 +100,11 @@ function footer(year) {
         <div class="foot-label">Kontakt</div>
         <a class="foot-mail" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
         <p class="foot-note">Odpowiadamy tego samego dnia.</p>
+        <address class="foot-company">Receply prowadzi ${esc(COMPANY.name)}<br>${esc(COMPANY.address)}<br>NIP ${COMPANY.nip} · KRS ${COMPANY.krs}</address>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© ${year} Receply · receply.pl</span>
+      <span>© ${year} Receply · receply.pl${legal}</span>
       <span>Produkt we wczesnym dostępie.</span>
     </div>
   </div>
@@ -253,6 +254,25 @@ ${footer(today.slice(0, 4))}
 `;
 }
 
+// /usuwanie-danych?kod=…: tu Meta odsyła po żądaniu usunięcia danych (receply-app, funkcja
+// meta-data-deletion). Bez kodu w adresie ramka zostaje ukryta. Kod trafia na stronę jako tekst
+// i tylko w formacie identyfikatora, więc link nie podłoży stronie cudzej treści.
+function deletionConfirmation() {
+  return `<div class="notice" id="potwierdzenie" role="status" hidden>
+        <span class="notice-label">Żądanie wykonane</span>
+        <p class="notice-title">Odłączyliśmy konto Instagram od Receply</p>
+        <p>Przetworzyliśmy Twoje żądanie usunięcia danych. Połączone konto Instagram zostało odłączone, a jego token dostępu usunięty, więc Receply nie odbiera już wiadomości z tego konta i nie może na nie odpowiadać.</p>
+        <p class="notice-code">Kod żądania: <code id="kod-zadania"></code></p>
+        <p class="notice-note">Zachowaj kod i podaj go, jeśli zechcesz zapytać nas o to żądanie. Jak usunąć także historię rozmów, opisujemy <a href="#historia-rozmow-i-pozostale-dane-firmy">niżej</a>.</p>
+      </div>
+      <script>(function () {
+        var kod = new URLSearchParams(location.search).get('kod');
+        if (!kod || !/^[A-Za-z0-9-]{4,64}$/.test(kod)) return;
+        document.getElementById('kod-zadania').textContent = kod;
+        document.getElementById('potwierdzenie').hidden = false;
+      })();</script>`;
+}
+
 export function renderLegal({ page, today, cssHref, noindex }) {
   const canonical = `${SITE}/${page.slug}/`;
   return `${head({ title: page.seoTitle, description: page.description, canonical, ogType: 'website', image: DEFAULT_IMAGE, cssHref, noindex })}
@@ -265,6 +285,7 @@ ${nav('legal')}
         <h1>${esc(page.title)}</h1>
         <div class="byline"><span>Ostatnia aktualizacja: ${plDate(page.updated)}</span></div>
       </header>
+      ${page.slug === 'usuwanie-danych' ? deletionConfirmation() : ''}
       <div class="prose">
 ${page.html}
       </div>

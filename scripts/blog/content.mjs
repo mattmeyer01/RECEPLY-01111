@@ -7,6 +7,13 @@ import { Marked } from 'marked';
 
 export const SITE = 'https://receply.pl';
 export const CONTACT_EMAIL = 'kontakt@receply.pl';
+// Spółka prowadząca Receply (stopka). Kopia w src/lib/site.ts; pełne dane także w content/legal.
+export const COMPANY = {
+  name: 'GETFORCE SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ',
+  address: 'ul. Dzięcieliny 12/3, 04-709 Warszawa',
+  nip: '9522184038',
+  krs: '0000739712',
+};
 export const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 export const REQUIRED = ['title', 'seo_title', 'description', 'date', 'author', 'minutes'];
 export const OPTIONAL = ['image'];
