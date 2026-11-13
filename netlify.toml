@@ -9,6 +9,15 @@
   status = 301
   force = true
 
+# Po żądaniu usunięcia danych Meta odsyła na /usuwanie-danych?kod=… (bez ukośnika na końcu,
+# receply-app: funkcja meta-data-deletion). Rewrite podaje stronę od razu pod tym adresem,
+# więc kod zostaje w pasku adresu i ramka z potwierdzeniem go widzi.
+[[redirects]]
+  from = "/usuwanie-danych"
+  to = "/usuwanie-danych/index.html"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]

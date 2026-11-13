@@ -1,6 +1,13 @@
-// Stopka w ramce strony: marka i kontakt, nawigacja po sekcjach, uczciwa
-// informacja o wczesnym etapie produktu i duży, wyblakły znak Receply.
-import { APP_URL, CONTACT_EMAIL, PRIVACY_URL } from '@/lib/site';
+// Stopka w ramce strony: marka, kontakt i dane spółki, nawigacja po sekcjach, strony prawne,
+// uczciwa informacja o wczesnym etapie produktu i duży, wyblakły znak Receply.
+import { Fragment } from 'react';
+import { APP_URL, COMPANY, CONTACT_EMAIL, DELETION_URL, PRIVACY_URL } from '@/lib/site';
+
+// Szkice stron prawnych (draft w content/legal) nie mają adresu i nie trafiają do stopki.
+const LEGAL = [
+  { href: PRIVACY_URL, label: 'Polityka prywatności' },
+  { href: DELETION_URL, label: 'Usuwanie danych' },
+].filter((l): l is { href: string; label: string } => l.href !== null);
 
 const NAV = [
   { href: '#problem', label: 'Problem' },
@@ -42,20 +49,27 @@ export function Footer() {
               {CONTACT_EMAIL}
             </a>
             <p className="text-[14px] text-ink/48 mt-2">Odpowiadamy tego samego dnia.</p>
+            <address className="not-italic text-[13px] text-ink/48 leading-relaxed mt-6">
+              Receply prowadzi {COMPANY.name}
+              <br />
+              {COMPANY.address}
+              <br />
+              NIP {COMPANY.nip} · KRS {COMPANY.krs}
+            </address>
           </div>
         </div>
 
         <div className="flex items-center justify-between gap-4 flex-wrap mt-14 pt-6 border-t border-ink/8 text-[13px] text-ink/48">
           <span>
             © 2026 Receply · receply.pl
-            {PRIVACY_URL && (
-              <>
+            {LEGAL.map((l) => (
+              <Fragment key={l.href}>
                 {' · '}
-                <a href={PRIVACY_URL} className="underline underline-offset-2 hover:text-ink">
-                  Polityka prywatności
+                <a href={l.href} className="underline underline-offset-2 hover:text-ink">
+                  {l.label}
                 </a>
-              </>
-            )}
+              </Fragment>
+            ))}
           </span>
           <span>Produkt we wczesnym dostępie. Rozmowy i dane na tej stronie są przykładowe.</span>
         </div>
