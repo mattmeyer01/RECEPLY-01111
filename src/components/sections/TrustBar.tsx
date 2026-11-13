@@ -6,7 +6,7 @@ import { CalendarX, Globe, Lock, ShieldCheck, type LucideIcon } from 'lucide-rea
 import { Reveal } from '@/lib/ui';
 
 const ITEMS: { icon: LucideIcon; label: string }[] = [
-  { icon: Globe, label: 'Dane przetwarzane w UE' },
+  { icon: Globe, label: 'Baza danych w UE' },
   { icon: ShieldCheck, label: 'Zgodność z RODO' },
   { icon: Lock, label: 'Szyfrowana komunikacja' },
   { icon: CalendarX, label: 'Brak umowy długoterminowej' },

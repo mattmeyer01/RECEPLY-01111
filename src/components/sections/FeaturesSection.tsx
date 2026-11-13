@@ -229,7 +229,7 @@ const EXTRAS = [
   { icon: AudioLines, title: 'Naturalny polski głos', desc: 'Płynna rozmowa, bez „wciśnij 1”.' },
   { icon: BellRing, title: 'Przypomnienia SMS', desc: 'Mniej zapomnianych wizyt.' },
   { icon: Clock, title: '24/7, także w święta', desc: 'Wieczory i weekendy w cenie.' },
-  { icon: ShieldCheck, title: 'Dane w UE, zgodnie z RODO', desc: 'Szyfrowane, nikomu nieodsprzedawane.' },
+  { icon: ShieldCheck, title: 'Baza danych w UE', desc: 'Szyfrowana, nikomu nieodsprzedawana.' },
 ];
 
 export function FeaturesSection() {
