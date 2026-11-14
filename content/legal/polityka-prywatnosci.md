@@ -46,7 +46,9 @@ Używamy ich, żeby założyć konto i umożliwić logowanie, świadczyć usług
 
 Dane konta przechowujemy przez czas korzystania z Receply. Po zakończeniu umowy usuwamy konta użytkowników, a dane potrzebne do dochodzenia roszczeń lub obrony przed nimi przechowujemy do czasu ich przedawnienia. Dokumenty księgowe przechowujemy przez 5 lat od końca roku kalendarzowego, w którym upłynął termin płatności podatku.
 
-Dane, które firma wprowadza do panelu o swoich klientach i pracownikach (np. wizyty i grafiki), przetwarzamy w imieniu firmy, na zasadach opisanych w następnej części.
+**Baza wiedzy.** W panelu firma opisuje m.in. swoje zasady, dojazd i odpowiedzi na częste pytania, a asystent korzysta z tych wpisów, gdy odpowiada jej klientom. Właściciel firmy może też poprosić o propozycje wpisów na podstawie strony internetowej firmy. Pobieramy wtedy publicznie dostępną stronę główną i do 7 podstron tego samego serwisu, wycinamy z nich tekst i wysyłamy go do modelu AI firmy Anthropic, który przygotowuje propozycje. Tekstu stron ani propozycji nie zapisujemy w Receply, a do bazy wiedzy trafiają tylko wpisy, które właściciel zatwierdzi. Zostaje jedynie zapis próby: adres strony, wynik oraz liczba stron i propozycji. Dane osobowe, które są na stronie, np. imiona, nazwiska i opisy lekarzy, przetwarzamy w imieniu firmy: trafiają do modelu razem z resztą tekstu, a w bazie wiedzy zostają tylko wtedy, gdy właściciel zatwierdzi wpis, który je zawiera.
+
+Dane, które firma wprowadza do panelu o swoich klientach i pracownikach (np. wizyty, grafiki i zdjęcia profilowe osób z zespołu), przetwarzamy w imieniu firmy, na zasadach opisanych w następnej części. Zdjęcia osób z zespołu dodaje właściciel firmy. Panel przycina je do kwadratu i zapisuje jako nowy plik JPG, bez metadanych z aparatu, np. lokalizacji. Gdy firma wymieni zdjęcie, usunie je albo usunie osobę z zespołu, kasujemy też plik ze zdjęciem.
 
 ## Klienci firm korzystających z Receply
 
@@ -76,15 +78,17 @@ Receply łączy się z Instagramem przez oficjalne API Mety (Instagram API z log
 
 **Do jakich danych mamy dostęp:**
 
-- nazwa użytkownika i identyfikator połączonego konta firmowego (uprawnienie `instagram_business_basic`),
+- nazwa użytkownika, identyfikator i zdjęcie profilowe połączonego konta firmowego (uprawnienie `instagram_business_basic`),
 - wiadomości prywatne (Direct) wysyłane do tego konta, razem z identyfikatorem nadawcy, oraz odpowiedzi, które wysyła z niego Receply albo zespół firmy z panelu Receply (uprawnienie `instagram_business_manage_messages`),
 - token dostępu, który Instagram wydaje po połączeniu konta. Przechowujemy go w postaci zaszyfrowanej i używamy tylko do odbierania i wysyłania wiadomości.
 
-**Do czego ich używamy:** wyłącznie do tego, żeby w imieniu firmy odbierać wiadomości od jej klientów, odpowiadać na nie, umawiać wizyty i pokazywać rozmowy zespołowi firmy w panelu Receply.
+**Do czego ich używamy:** wyłącznie do tego, żeby w imieniu firmy odbierać wiadomości od jej klientów, odpowiadać na nie, umawiać wizyty i pokazywać rozmowy zespołowi firmy w panelu Receply. Nazwę i zdjęcie profilowe konta pokazujemy w panelu firmy, żeby jej zespół widział, które konto jest połączone.
+
+**Zdjęcie profilowe konta:** zapisujemy tylko adres obrazka na serwerach Instagrama. Samego obrazka nie kopiujemy ani nie przechowujemy u siebie. Ten adres po kilku dniach przestaje działać, dlatego raz na dobę pobieramy z Instagrama aktualny adres zdjęcia i nazwę konta. Panel wczytuje zdjęcie bezpośrednio z serwerów Instagrama, więc przy jego wyświetleniu Meta otrzymuje adres IP i informacje o przeglądarce osoby korzystającej z panelu.
 
 **Czego nie robimy:** nie sprzedajemy tych danych, nie udostępniamy ich w celach reklamowych i nie profilujemy na ich podstawie. Nie publikujemy niczego na koncie firmy i nie pobieramy postów, komentarzy ani listy obserwujących.
 
-**Jak odłączyć konto i usunąć dane:** firma może w każdej chwili usunąć Receply w ustawieniach Instagrama albo napisać do nas. Wtedy odłączamy konto i usuwamy token dostępu. Instrukcja, także dla osób, które pisały do firmy, jest na stronie [Usuwanie danych](/usuwanie-danych/).
+**Jak odłączyć konto i usunąć dane:** firma może w każdej chwili usunąć Receply w ustawieniach Instagrama albo napisać do nas. Wtedy odłączamy konto, usuwamy token dostępu i adres zdjęcia profilowego. Instrukcja, także dla osób, które pisały do firmy, jest na stronie [Usuwanie danych](/usuwanie-danych/).
 
 ## Komu powierzamy dane
 
@@ -93,7 +97,7 @@ Nie sprzedajemy danych osobowych. Korzystamy z dostawców, którzy pomagają nam
 | Dostawca | Do czego | Siedziba |
 |---|---|---|
 | Supabase | baza danych, logowanie do panelu i funkcje serwerowe; serwery w UE (Irlandia) | USA |
-| Anthropic | model AI, który przygotowuje odpowiedzi asystenta i podsumowania rozmów | USA |
+| Anthropic | model AI, który przygotowuje odpowiedzi asystenta, podsumowania rozmów i propozycje wpisów bazy wiedzy | USA |
 | Meta Platforms Ireland | Instagram: odbieranie i wysyłanie wiadomości | Irlandia |
 | SMSAPI | przypomnienia SMS o wizytach i odbiór odpowiedzi | Polska |
 | Netlify | hosting strony receply.pl i panelu, formularz kontaktowy | USA |
@@ -107,7 +111,7 @@ Dane mogą też otrzymać podmioty, które świadczą nam usługi księgowe i pr
 
 ## Przekazywanie danych poza Europejski Obszar Gospodarczy
 
-Bazę danych Receply, a w niej rozmowy, wizyty i dane kontaktowe, prowadzimy w Unii Europejskiej, na serwerach Supabase w Irlandii. Część dostawców ma jednak siedzibę w USA albo może przetwarzać dane także poza Europejskim Obszarem Gospodarczym (Anthropic, Supabase, Netlify, Google). Dotyczy to zwłaszcza odpowiedzi asystenta: żeby je przygotować, przesyłamy treść rozmowy do modelu AI firmy Anthropic, który działa w USA. Zgodnie z warunkami, na jakich korzystamy z usług Anthropic, przesyłane treści nie służą do trenowania modeli AI.
+Bazę danych Receply, a w niej rozmowy, wizyty i dane kontaktowe, prowadzimy w Unii Europejskiej, na serwerach Supabase w Irlandii. Część dostawców ma jednak siedzibę w USA albo może przetwarzać dane także poza Europejskim Obszarem Gospodarczym (Anthropic, Supabase, Netlify, Google). Dotyczy to zwłaszcza odpowiedzi asystenta: żeby je przygotować, przesyłamy treść rozmowy do modelu AI firmy Anthropic, który działa w USA. Do tego modelu trafia też tekst strony internetowej firmy, gdy właściciel poprosi o propozycje wpisów bazy wiedzy. Zgodnie z warunkami, na jakich korzystamy z usług Anthropic, przesyłane treści nie służą do trenowania modeli AI.
 
 Takie przekazania zabezpiecza decyzja Komisji Europejskiej stwierdzająca odpowiedni stopień ochrony (EU-U.S. Data Privacy Framework), gdy dostawca jest nią objęty, a w pozostałych przypadkach standardowe klauzule umowne przyjęte przez Komisję Europejską (art. 46 ust. 2 lit. c RODO). Kopię tych zabezpieczeń możesz otrzymać, pisząc na [kontakt@receply.pl](mailto:kontakt@receply.pl).
 

@@ -21,11 +21,11 @@ Konto możesz odłączyć na dwa sposoby.
 2. W ustawieniach (w aplikacji: Ustawienia i aktywność) otwórz sekcję **Aplikacje i witryny**.
 3. Na liście aktywnych aplikacji wybierz Receply i usuń jej dostęp. Jeśli Instagram zapyta o usunięcie danych, potwierdź.
 
-Meta przekaże nam wtedy żądanie usunięcia danych, a my automatycznie odłączymy konto i usuniemy jego token dostępu. Od tej chwili Receply nie odbiera wiadomości z tego konta i nie może na nie odpowiadać. Meta pokaże Ci kod potwierdzenia i link do tej strony.
+Meta przekaże nam wtedy żądanie usunięcia danych, a my automatycznie odłączymy konto oraz usuniemy jego token dostępu i zapisany adres zdjęcia profilowego. Od tej chwili Receply nie odbiera wiadomości z tego konta i nie może na nie odpowiadać. Meta pokaże Ci kod potwierdzenia i link do tej strony.
 
 ### E-mailem
 
-Napisz na [kontakt@receply.pl](mailto:kontakt@receply.pl) z adresu, którym logujesz się do panelu Receply, i podaj nazwę konta na Instagramie. Odłączymy konto i usuniemy token dostępu niezwłocznie, najpóźniej w ciągu miesiąca, i potwierdzimy to e-mailem.
+Napisz na [kontakt@receply.pl](mailto:kontakt@receply.pl) z adresu, którym logujesz się do panelu Receply, i podaj nazwę konta na Instagramie. Odłączymy konto oraz usuniemy token dostępu i adres zdjęcia profilowego niezwłocznie, najpóźniej w ciągu miesiąca, i potwierdzimy to e-mailem.
 
 ### Historia rozmów i pozostałe dane firmy
 
