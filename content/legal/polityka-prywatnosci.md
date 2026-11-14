@@ -10,7 +10,7 @@ description: "Jak GETFORCE sp. z o.o. przetwarza dane w Receply: osób odwiedzaj
 updated: "2026-11-14"
 ---
 
-Receply to asystent AI, który w imieniu firm usługowych, np. klinik medycyny estetycznej, odpowiada ich klientom na Instagramie i SMS-em oraz umawia wizyty. Ta polityka wyjaśnia, jakie dane osobowe przy tym przetwarzamy, po co, komu je powierzamy, jak długo je przechowujemy i jakie prawa Ci przysługują. Dotyczy strony receply.pl, panelu app.receply.pl i usługi Receply.
+Receply to asystent AI, który w imieniu firm usługowych, np. klinik medycyny estetycznej, odpowiada ich klientom na Instagramie, SMS-em i w czacie na stronie rezerwacji oraz umawia wizyty. Ta polityka wyjaśnia, jakie dane osobowe przy tym przetwarzamy, po co, komu je powierzamy, jak długo je przechowujemy i jakie prawa Ci przysługują. Dotyczy strony receply.pl, panelu app.receply.pl, stron rezerwacji, które firmy prowadzą w Receply, i usługi Receply.
 
 ## Kto odpowiada za dane
 
@@ -21,7 +21,7 @@ W sprawach danych osobowych napisz na [kontakt@receply.pl](mailto:kontakt@recepl
 GETFORCE występuje w dwóch rolach:
 
 - **Jesteśmy administratorem** danych osób, które odwiedzają stronę receply.pl, piszą do nas albo wypełniają formularz kontaktowy, oraz danych właścicieli i pracowników firm, którzy korzystają z panelu Receply.
-- **Jesteśmy podmiotem przetwarzającym** dane klientów tych firm, czyli osób, które piszą do firmy na Instagramie albo odpowiadają na jej SMS-y. Te dane przetwarzamy wyłącznie w imieniu i na polecenie firmy, na podstawie zawartej z nią umowy powierzenia przetwarzania danych (art. 28 RODO). Administratorem Twoich danych jest wtedy firma, do której piszesz, np. klinika. To ona decyduje, w jakim celu i jak długo dane są przetwarzane, i do niej najlepiej kierować pytania oraz żądania. Jeśli napiszesz do nas, przekażemy sprawę firmie i pomożemy ją załatwić.
+- **Jesteśmy podmiotem przetwarzającym** dane klientów tych firm, czyli osób, które piszą do firmy na Instagramie, korzystają z jej strony rezerwacji albo odpowiadają na jej SMS-y. Te dane przetwarzamy wyłącznie w imieniu i na polecenie firmy, na podstawie zawartej z nią umowy powierzenia przetwarzania danych (art. 28 RODO). Administratorem Twoich danych jest wtedy firma, do której piszesz, np. klinika. To ona decyduje, w jakim celu i jak długo dane są przetwarzane, i do niej najlepiej kierować pytania oraz żądania. Jeśli napiszesz do nas, przekażemy sprawę firmie i pomożemy ją załatwić.
 
 ## Osoby odwiedzające stronę i kontaktujące się z nami
 
@@ -50,14 +50,20 @@ Dane, które firma wprowadza do panelu o swoich klientach i pracownikach (np. wi
 
 ## Klienci firm korzystających z Receply
 
-Jeśli piszesz do firmy na Instagramie, wiadomość może odebrać asystent Receply. W pierwszej odpowiedzi informuje, że jest asystentem AI. W imieniu firmy odpowiada na pytania o usługi, ceny i wolne terminy, umawia i odwołuje wizyty w kalendarzu firmy, a sprawy, których nie może załatwić, przekazuje zespołowi firmy. Jeśli firma korzysta z przypomnień, przed wizytą dostajesz SMS. Odpowiedź „ODWOŁUJĘ” odwołuje wizytę, a inne odpowiedzi przekazujemy zespołowi firmy.
+Jeśli piszesz do firmy na Instagramie albo w czacie na jej stronie rezerwacji, wiadomość może odebrać asystent Receply. Od początku rozmowy mówi, że jest asystentem AI. W imieniu firmy odpowiada na pytania o usługi, ceny i wolne terminy, umawia i odwołuje wizyty w kalendarzu firmy, a sprawy, których nie może załatwić, przekazuje zespołowi firmy.
+
+Na stronie rezerwacji możesz też sama lub sam wybrać usługę, osobę i termin. Wizytę potwierdzasz kodem, który wysyłamy SMS-em na podany numer telefonu, bez zakładania konta. Wizytę umówioną w czacie na stronie też potwierdzasz takim kodem. Po potwierdzeniu przeglądarka zapamiętuje urządzenie na 90 dni, więc kolejną wizytę w tej firmie umówisz albo odwołasz bez kodu. Przycisk „To nie ja” usuwa to zapamiętanie. Stronę rezerwacji firma włącza sama i sama decyduje, co na niej pokazać, np. usługi z cenami i zdjęciami oraz imiona i zdjęcia osób z zespołu.
+
+Zależnie od ustawień firmy dostajesz SMS z potwierdzeniem wizyty i przypomnienie przed nią. Odpowiedź „ODWOŁUJĘ” odwołuje wizytę, a inne odpowiedzi przekazujemy zespołowi firmy. Jeśli się na to zgodzisz, po wizycie firma może wysłać Ci jednego SMS-a z prośbą o opinię. Zgodę cofasz, odpisując „STOP”.
 
 Te dane przetwarzamy jako podmiot przetwarzający: w imieniu firmy, która jest ich administratorem, i wyłącznie na jej polecenie. Są to:
 
 - identyfikator, który Instagram nadaje Twojemu kontu na potrzeby rozmowy z daną firmą, i treść wiadomości,
+- treść wiadomości w czacie na stronie rezerwacji,
 - informacja, że wysłałaś lub wysłałeś zdjęcie albo nagranie głosowe; samej zawartości załączników nie pobieramy ani nie przechowujemy,
-- dane podane w rozmowie i potrzebne do umówienia wizyty: imię, numer telefonu, wybrana usługa i termin,
-- numer telefonu oraz treść SMS-ów z przypomnieniami i Twoich odpowiedzi,
+- dane podane w rozmowie albo na stronie rezerwacji i potrzebne do umówienia wizyty: imię (na stronie rezerwacji także nazwisko), numer telefonu, wybrana usługa, osoba i termin,
+- numer telefonu, treść SMS-ów z potwierdzeniami, przypomnieniami i prośbami o opinię oraz Twoich odpowiedzi, a także informacja, czy zgadzasz się na SMS z prośbą o opinię,
+- na stronie rezerwacji: skrót kodu SMS, z którego nie da się odczytać samego kodu, zapis zapamiętanego urządzenia i skrót adresu IP (samego adresu nie zapisujemy), który pomaga ograniczać nadużycia, np. masowe wysyłanie kodów,
 - krótkie podsumowanie rozmowy dla zespołu firmy, przygotowane przez model AI.
 
 ### Dane o zdrowiu
@@ -66,7 +72,7 @@ Wiadomości do klinik i gabinetów mogą zawierać dane o zdrowiu (art. 9 RODO),
 
 ### Jak długo przechowujemy te dane
 
-Rozmowy usuwamy po okresie ustalonym w umowie powierzenia z daną firmą, domyślnie po 365 dniach od ostatniej wiadomości w rozmowie. Historię wysłanych SMS-ów usuwamy po 90 dniach. Wizyty i dane kontaktowe zapisane w kalendarzu firmy przechowujemy, dopóki firma korzysta z Receply i sama ich nie usunie. Po zakończeniu umowy z firmą usuwamy albo zwracamy jej wszystkie dane jej klientów, zgodnie z umową powierzenia.
+Rozmowy usuwamy po okresie ustalonym w umowie powierzenia z daną firmą, domyślnie po 365 dniach od ostatniej wiadomości w rozmowie. Historię wysłanych SMS-ów usuwamy po 90 dniach. Prośby o kod ze strony rezerwacji usuwamy po 30 dniach, a zapamiętane urządzenie po 90 dniach od potwierdzenia kodem. Rozmowy z czatu na stronie usuwamy tak samo jak rozmowy z Instagrama. Wizyty i dane kontaktowe zapisane w kalendarzu firmy przechowujemy, dopóki firma korzysta z Receply i sama ich nie usunie. Po zakończeniu umowy z firmą usuwamy albo zwracamy jej wszystkie dane jej klientów, zgodnie z umową powierzenia.
 
 Jak poprosić o wcześniejsze usunięcie danych, opisujemy na stronie [Usuwanie danych](/usuwanie-danych/).
 
@@ -95,8 +101,8 @@ Nie sprzedajemy danych osobowych. Korzystamy z dostawców, którzy pomagają nam
 | Supabase | baza danych, logowanie do panelu i funkcje serwerowe; serwery w UE (Irlandia) | USA |
 | Anthropic | model AI, który przygotowuje odpowiedzi asystenta i podsumowania rozmów | USA |
 | Meta Platforms Ireland | Instagram: odbieranie i wysyłanie wiadomości | Irlandia |
-| SMSAPI | przypomnienia SMS o wizytach i odbiór odpowiedzi | Polska |
-| Netlify | hosting strony receply.pl i panelu, formularz kontaktowy | USA |
+| SMSAPI | SMS-y do klientów firm (kody, potwierdzenia, przypomnienia, prośby o opinię) i odbiór odpowiedzi | Polska |
+| Netlify | hosting strony receply.pl, panelu i stron rezerwacji, formularz kontaktowy | USA |
 | Brevo | wysyłka e-maili, np. linków do logowania w panelu | Francja |
 | Google (Google Workspace) | skrzynka e-mail kontakt@receply.pl | Irlandia |
 | Plausible Insights | statystyki odwiedzin strony, bez plików cookie | Estonia |
@@ -113,7 +119,7 @@ Takie przekazania zabezpiecza decyzja Komisji Europejskiej stwierdzająca odpowi
 
 ## Automatyczne odpowiedzi
 
-Asystent Receply odpowiada automatycznie, z pomocą modelu AI, i mówi o tym w pierwszej odpowiedzi. Nie podejmuje wobec Ciebie decyzji, które wywoływałyby skutki prawne albo w podobny sposób istotnie na Ciebie wpływały (art. 22 RODO). Wizytę umawia w terminie, który wybierzesz, a sprawy nietypowe, skargi i pytania, na które nie zna odpowiedzi, przekazuje zespołowi firmy.
+Asystent Receply odpowiada automatycznie, z pomocą modelu AI, i mówi o tym od początku rozmowy. Nie podejmuje wobec Ciebie decyzji, które wywoływałyby skutki prawne albo w podobny sposób istotnie na Ciebie wpływały (art. 22 RODO). Wizytę umawia w terminie, który wybierzesz, a sprawy nietypowe, skargi i pytania, na które nie zna odpowiedzi, przekazuje zespołowi firmy.
 
 ## Twoje prawa
 
@@ -132,15 +138,17 @@ Masz też prawo złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych, u
 
 ## Czy musisz podać dane
 
-Nie, podanie danych jest dobrowolne. Bez danych kontaktowych nie odpowiemy jednak na zapytanie, bez adresu e-mail nie założymy konta w panelu, a bez imienia i numeru telefonu asystent nie umówi wizyty.
+Nie, podanie danych jest dobrowolne. Bez danych kontaktowych nie odpowiemy jednak na zapytanie, bez adresu e-mail nie założymy konta w panelu, a bez imienia i numeru telefonu nie da się umówić wizyty.
 
 ## Bezpieczeństwo
 
-Dane przesyłamy szyfrowanym połączeniem (HTTPS) i przechowujemy w zaszyfrowanej bazie danych w UE. Do panelu logujesz się linkiem lub kodem z e-maila, a każda firma widzi wyłącznie dane swoich klientów. Tokeny dostępu do Instagrama przechowujemy w osobnym, zaszyfrowanym magazynie.
+Dane przesyłamy szyfrowanym połączeniem (HTTPS) i przechowujemy w zaszyfrowanej bazie danych w UE. Do panelu logujesz się linkiem lub kodem z e-maila, a każda firma widzi wyłącznie dane swoich klientów. Tokeny dostępu do Instagrama przechowujemy w osobnym, zaszyfrowanym magazynie. Na stronie rezerwacji numer telefonu potwierdzasz kodem SMS, a kody i identyfikatory zapamiętanych urządzeń oraz rozmów w czacie przechowujemy tylko jako skróty.
 
 ## Pliki cookie
 
 Strona receply.pl nie używa plików cookie do statystyk ani reklam. Panel app.receply.pl zapisuje w pamięci przeglądarki dane sesji, żeby utrzymać Twoje logowanie. Bez nich panel nie działa.
+
+Strony rezerwacji firm nie używają plików cookie. W pamięci przeglądarki zapisują tylko identyfikator zapamiętanego urządzenia, gdy potwierdzisz wizytę kodem, i identyfikator rozmowy, gdy napiszesz w czacie. Są potrzebne do kolejnej rezerwacji bez kodu, odwołania wizyty i dalszej rozmowy. Usuniesz je, czyszcząc dane strony w przeglądarce. Odsłony stron rezerwacji liczymy zbiorczo, bez danych osobowych.
 
 ## Zmiany polityki
 
