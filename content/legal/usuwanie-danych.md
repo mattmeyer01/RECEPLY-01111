@@ -9,7 +9,7 @@ description: "Jak odłączyć konto Instagram od Receply i usunąć dane: instru
 updated: "2026-11-14"
 ---
 
-Receply odpowiada w imieniu firm usługowych na wiadomości, które dostają na Instagramie. Tutaj opisujemy, jak firma może odłączyć konto Instagram od Receply i usunąć dane oraz jak usunięcia swoich danych może zażądać osoba, która do takiej firmy pisała. Usługę prowadzi GETFORCE sp.&nbsp;z&nbsp;o.o. Więcej o przetwarzaniu danych przeczytasz w [polityce prywatności](/polityka-prywatnosci/).
+Receply odpowiada w imieniu firm usługowych na wiadomości od ich klientów i umawia wizyty, także przez strony rezerwacji. Tutaj opisujemy, jak firma może odłączyć konto Instagram od Receply i usunąć dane oraz jak usunięcia swoich danych może zażądać osoba, która się z taką firmą kontaktowała. Usługę prowadzi GETFORCE sp.&nbsp;z&nbsp;o.o. Więcej o przetwarzaniu danych przeczytasz w [polityce prywatności](/polityka-prywatnosci/).
 
 ## Twoja firma połączyła konto Instagram z Receply
 
@@ -31,13 +31,13 @@ Napisz na [kontakt@receply.pl](mailto:kontakt@receply.pl) z adresu, którym logu
 
 Odłączenie konta nie usuwa historii rozmów zapisanej w panelu Receply. To dane Twojej firmy, które przechowujemy zgodnie z umową powierzenia, domyślnie przez 365 dni od ostatniej wiadomości w rozmowie. Jeśli chcesz usunąć je wcześniej albo zamknąć konto firmy razem z kalendarzem wizyt i danymi klientów, napisz o tym na [kontakt@receply.pl](mailto:kontakt@receply.pl). Usuniemy je najpóźniej w ciągu miesiąca. Zostawimy tylko dane, które musimy przechowywać na podstawie przepisów, np. faktury.
 
-## Pisałaś lub pisałeś do firmy, która korzysta z Receply
+## Kontaktowałaś lub kontaktowałeś się z firmą, która korzysta z Receply
 
-Administratorem Twoich danych jest firma, do której pisałaś lub pisałeś, więc najprościej poprosić o usunięcie danych bezpośrednio ją. Możesz też napisać do nas na [kontakt@receply.pl](mailto:kontakt@receply.pl). Podaj nazwę firmy oraz nazwę swojego konta na Instagramie albo numer telefonu, z którego się z nią kontaktowałaś lub kontaktowałeś.
+Administratorem Twoich danych jest firma, z którą się kontaktowałaś lub kontaktowałeś: na Instagramie, SMS-em albo przez jej stronę rezerwacji. Najprościej więc poprosić o usunięcie danych bezpośrednio ją. Możesz też napisać do nas na [kontakt@receply.pl](mailto:kontakt@receply.pl). Podaj nazwę firmy oraz nazwę swojego konta na Instagramie albo numer telefonu, który podałaś lub podałeś firmie.
 
 Przekażemy żądanie firmie i zgodnie z jej poleceniem, najpóźniej w ciągu miesiąca:
 
-- usuniemy Twoje rozmowy, SMS-y i dane kontaktowe,
+- usuniemy Twoje rozmowy, SMS-y i dane kontaktowe, a także zapamiętane urządzenia i prośby o kod ze strony rezerwacji,
 - odwołamy Twoje przyszłe wizyty,
 - przeszłe wizyty zostawimy w statystykach firmy, ale bez danych, które pozwalają Cię zidentyfikować.
 
