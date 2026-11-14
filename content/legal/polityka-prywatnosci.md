@@ -46,7 +46,7 @@ Używamy ich, żeby założyć konto i umożliwić logowanie, świadczyć usług
 
 Dane konta przechowujemy przez czas korzystania z Receply. Po zakończeniu umowy usuwamy konta użytkowników, a dane potrzebne do dochodzenia roszczeń lub obrony przed nimi przechowujemy do czasu ich przedawnienia. Dokumenty księgowe przechowujemy przez 5 lat od końca roku kalendarzowego, w którym upłynął termin płatności podatku.
 
-Dane, które firma wprowadza do panelu o swoich klientach i pracownikach (np. wizyty i grafiki), przetwarzamy w imieniu firmy, na zasadach opisanych w następnej części.
+Dane, które firma wprowadza do panelu o swoich klientach i pracownikach (np. wizyty, grafiki i zdjęcia profilowe osób z zespołu), przetwarzamy w imieniu firmy, na zasadach opisanych w następnej części. Zdjęcia osób z zespołu dodaje właściciel firmy. Panel przycina je do kwadratu i zapisuje jako nowy plik JPG, bez metadanych z aparatu, np. lokalizacji. Gdy firma wymieni zdjęcie, usunie je albo usunie osobę z zespołu, kasujemy też plik ze zdjęciem.
 
 ## Klienci firm korzystających z Receply
 
@@ -76,15 +76,17 @@ Receply łączy się z Instagramem przez oficjalne API Mety (Instagram API z log
 
 **Do jakich danych mamy dostęp:**
 
-- nazwa użytkownika i identyfikator połączonego konta firmowego (uprawnienie `instagram_business_basic`),
+- nazwa użytkownika, identyfikator i zdjęcie profilowe połączonego konta firmowego (uprawnienie `instagram_business_basic`),
 - wiadomości prywatne (Direct) wysyłane do tego konta, razem z identyfikatorem nadawcy, oraz odpowiedzi, które wysyła z niego Receply albo zespół firmy z panelu Receply (uprawnienie `instagram_business_manage_messages`),
 - token dostępu, który Instagram wydaje po połączeniu konta. Przechowujemy go w postaci zaszyfrowanej i używamy tylko do odbierania i wysyłania wiadomości.
 
-**Do czego ich używamy:** wyłącznie do tego, żeby w imieniu firmy odbierać wiadomości od jej klientów, odpowiadać na nie, umawiać wizyty i pokazywać rozmowy zespołowi firmy w panelu Receply.
+**Do czego ich używamy:** wyłącznie do tego, żeby w imieniu firmy odbierać wiadomości od jej klientów, odpowiadać na nie, umawiać wizyty i pokazywać rozmowy zespołowi firmy w panelu Receply. Nazwę i zdjęcie profilowe konta pokazujemy w panelu firmy, żeby jej zespół widział, które konto jest połączone.
+
+**Zdjęcie profilowe konta:** zapisujemy tylko adres obrazka na serwerach Instagrama. Samego obrazka nie kopiujemy ani nie przechowujemy u siebie. Ten adres po kilku dniach przestaje działać, dlatego raz na dobę pobieramy z Instagrama aktualny adres zdjęcia i nazwę konta. Panel wczytuje zdjęcie bezpośrednio z serwerów Instagrama, więc przy jego wyświetleniu Meta otrzymuje adres IP i informacje o przeglądarce osoby korzystającej z panelu.
 
 **Czego nie robimy:** nie sprzedajemy tych danych, nie udostępniamy ich w celach reklamowych i nie profilujemy na ich podstawie. Nie publikujemy niczego na koncie firmy i nie pobieramy postów, komentarzy ani listy obserwujących.
 
-**Jak odłączyć konto i usunąć dane:** firma może w każdej chwili usunąć Receply w ustawieniach Instagrama albo napisać do nas. Wtedy odłączamy konto i usuwamy token dostępu. Instrukcja, także dla osób, które pisały do firmy, jest na stronie [Usuwanie danych](/usuwanie-danych/).
+**Jak odłączyć konto i usunąć dane:** firma może w każdej chwili usunąć Receply w ustawieniach Instagrama albo napisać do nas. Wtedy odłączamy konto, usuwamy token dostępu i adres zdjęcia profilowego. Instrukcja, także dla osób, które pisały do firmy, jest na stronie [Usuwanie danych](/usuwanie-danych/).
 
 ## Komu powierzamy dane
 

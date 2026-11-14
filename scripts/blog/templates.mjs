@@ -261,7 +261,7 @@ function deletionConfirmation() {
   return `<div class="notice" id="potwierdzenie" role="status" hidden>
         <span class="notice-label">Żądanie wykonane</span>
         <p class="notice-title">Odłączyliśmy konto Instagram od Receply</p>
-        <p>Przetworzyliśmy Twoje żądanie usunięcia danych. Połączone konto Instagram zostało odłączone, a jego token dostępu usunięty, więc Receply nie odbiera już wiadomości z tego konta i nie może na nie odpowiadać.</p>
+        <p>Przetworzyliśmy Twoje żądanie usunięcia danych. Usunęliśmy token dostępu do konta, więc Receply nie odbiera już z niego wiadomości i nie może na nie odpowiadać. Usunęliśmy też zapisany adres zdjęcia profilowego konta.</p>
         <p class="notice-code">Kod żądania: <code id="kod-zadania"></code></p>
         <p class="notice-note">Zachowaj kod i podaj go, jeśli zechcesz zapytać nas o to żądanie. Jak usunąć także historię rozmów, opisujemy <a href="#historia-rozmow-i-pozostale-dane-firmy">niżej</a>.</p>
       </div>
